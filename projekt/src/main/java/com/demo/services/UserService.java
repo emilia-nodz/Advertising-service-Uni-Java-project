@@ -2,7 +2,7 @@ package com.demo.services;
 
 import java.util.List;
 
-import com.demo.impl.UserDAOimpl;
+import com.demo.impl.UserDAOImpl;
 import com.demo.models.User;
 import com.demo.models.UserRole;
 
@@ -10,7 +10,7 @@ import jakarta.inject.Inject;
 
 public class UserService {
     @Inject
-    private UserDAOimpl userDao;
+    private UserDAOImpl userDao;
 
     public void addUsers() {
         User user = new User();

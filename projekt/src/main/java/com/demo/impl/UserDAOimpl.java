@@ -11,7 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @ApplicationScoped
-public class UserDAOimpl implements UserDAO {
+public class UserDAOImpl implements UserDAO {
     
     @PersistenceContext(unitName = "myPU")
     private EntityManager em;

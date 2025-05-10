@@ -1,5 +1,5 @@
+com\demo\impl\UserDAOImpl.class
 com\demo\App.class
-com\demo\impl\UserDAOimpl.class
 com\demo\RestApplication.class
 com\demo\services\UserService.class
 com\demo\Configuration.class
