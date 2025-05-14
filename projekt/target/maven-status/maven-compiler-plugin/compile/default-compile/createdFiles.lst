@@ -1,8 +1,0 @@
-com\demo\impl\UserDAOImpl.class
-com\demo\App.class
-com\demo\RestApplication.class
-com\demo\services\UserService.class
-com\demo\Configuration.class
-com\demo\models\UserRole.class
-com\demo\dao\UserDAO.class
-com\demo\models\User.class

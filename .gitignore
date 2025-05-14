@@ -27,3 +27,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### target folder ###
+projekt/target
+!projekt/target/jacoco.exec
+
+### logi ###
+projekt/logs/*
