@@ -183,5 +183,13 @@
         <version>2.7.4</version>
     </dependency>
 
+    <!-- Spring Boot Testy -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <version>2.7.4</version>
+        <scope>test</scope>
+    </dependency>
+
   </dependencies>
 </project>
