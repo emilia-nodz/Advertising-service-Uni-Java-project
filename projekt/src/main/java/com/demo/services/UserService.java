@@ -1,32 +1,34 @@
 package com.demo.services;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import com.demo.impl.UserDAOImpl;
+import com.demo.dao.UserDAO;
 import com.demo.models.User;
-import com.demo.models.UserRole;
 
-import jakarta.inject.Inject;
-
+@Service
 public class UserService {
-    @Inject
-    private UserDAOImpl userDao;
+    @Autowired
+    private UserDAO userDAO;
 
-    public void addUsers() {
-        User user = new User();
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setEmail("admin@admin.com");
-        user.setName("admin");
-        user.setSurname("admin");
-        user.setRole(UserRole.ADMIN);
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        userDao.create(user);
+    // Rejestracja użytkownika
+    public void register(User user) throws Exception {
+        if (userDAO.findByUsername(user.getUsername()) != null) {
+            throw new Exception("Username already exists");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDAO.create(user);
     }
 
-    // Tymczasowa metoda do wypisania wszystkich adminów:
-    public void printAdmins() {
-        List<User> admins = userDao.findByRole(UserRole.ADMIN);
-        admins.forEach(user -> System.out.println(user.getUsername()));
+    // Logowanie użytkownika
+    public boolean login(String username, String password) {
+        User user = userDAO.findByUsername(username);
+        if (user != null) {
+            return passwordEncoder.matches(password, user.getPassword());
+        }
+        return false;
     }
 }
