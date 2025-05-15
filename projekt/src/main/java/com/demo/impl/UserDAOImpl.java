@@ -9,10 +9,12 @@ import com.demo.models.UserRole;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @ApplicationScoped
+@Transactional
 public class UserDAOImpl implements UserDAO {
     
     private static final Logger logger = LogManager.getLogger(UserDAOImpl.class);

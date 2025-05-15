@@ -1,41 +1,41 @@
-13:35:29.628 [main] DEBUG org.hibernate.orm.results - Initializer list
-13:35:29.641 [main] DEBUG org.hibernate.orm.results -     com.demo.models.User(u) -> EntityResultInitializer(com.demo.models.User(u))@1162857229 (SingleTableEntityPersister(com.demo.models.User))
-13:35:29.663 [main] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.role,u1_0.surname,u1_0.username from users u1_0 where u1_0.role=?
-13:35:29.725 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [1]
-13:35:29.727 [main] DEBUG org.hibernate.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.demo.models.User(u)): 1
-13:35:29.747 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@3b901294
-13:35:29.780 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - rolling back
-13:35:29.783 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
-13:35:29.786 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
-13:35:29.899 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
-13:35:29.900 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
-13:35:29.913 [main] INFO  com.demo.impl.UserDAOImpl - Utworzenie użytkownika: testuser
-13:35:29.928 [main] DEBUG org.hibernate.engine.spi.ActionQueue - Executing identity-insert immediately
-13:35:29.939 [main] DEBUG org.hibernate.SQL - insert into users (email,name,password,role,surname,username,id) values (?,?,?,?,?,?,default)
-13:35:29.946 [main] DEBUG org.hibernate.id.IdentifierGeneratorHelper - Natively generated identity (com.demo.models.User) : 2
-13:35:29.962 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
-13:35:29.967 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Exception clearing maxRows/queryTimeout [Obiekt jest zamknięty
+13:13:50.867 [main] DEBUG org.hibernate.orm.results - Initializer list
+13:13:50.876 [main] DEBUG org.hibernate.orm.results -     com.demo.models.User(u) -> EntityResultInitializer(com.demo.models.User(u))@1109889185 (SingleTableEntityPersister(com.demo.models.User))
+13:13:50.891 [main] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.role,u1_0.surname,u1_0.username from users u1_0 where u1_0.role=?
+13:13:50.901 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [1]
+13:13:50.902 [main] DEBUG org.hibernate.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.demo.models.User(u)): 1
+13:13:50.911 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@31fafc3
+13:13:50.940 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - rolling back
+13:13:50.943 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+13:13:50.945 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+13:13:50.978 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+13:13:50.978 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
+13:13:50.978 [main] INFO  com.demo.impl.UserDAOImpl - Utworzenie użytkownika: testuser
+13:13:50.980 [main] DEBUG org.hibernate.engine.spi.ActionQueue - Executing identity-insert immediately
+13:13:50.981 [main] DEBUG org.hibernate.SQL - insert into users (email,name,password,role,surname,username,id) values (?,?,?,?,?,?,default)
+13:13:50.986 [main] DEBUG org.hibernate.id.IdentifierGeneratorHelper - Natively generated identity (com.demo.models.User) : 2
+13:13:50.987 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+13:13:50.988 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Exception clearing maxRows/queryTimeout [Obiekt jest zamknięty
 The object is already closed [90007-224]]
-13:35:30.065 [main] INFO  com.demo.impl.UserDAOImpl - Usunięto użytkownika z ID: 2
-13:35:30.082 [main] DEBUG com.demo.impl.UserDAOImpl - Szukanie użytkownika z ID: 2
-13:35:30.084 [main] DEBUG org.hibernate.orm.results.loading - Load request found matching entity in context, but it is scheduled for removal; returning null
-13:35:30.101 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - rolling back
-13:35:30.103 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
-13:35:30.103 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
-13:35:30.113 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
-13:35:30.114 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
-13:35:30.120 [main] INFO  com.demo.impl.UserDAOImpl - Utworzenie użytkownika: testuser
-13:35:30.123 [main] DEBUG org.hibernate.engine.spi.ActionQueue - Executing identity-insert immediately
-13:35:30.128 [main] DEBUG org.hibernate.SQL - insert into users (email,name,password,role,surname,username,id) values (?,?,?,?,?,?,default)
-13:35:30.130 [main] DEBUG org.hibernate.id.IdentifierGeneratorHelper - Natively generated identity (com.demo.models.User) : 3
-13:35:30.131 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
-13:35:30.131 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Exception clearing maxRows/queryTimeout [Obiekt jest zamknięty
+13:13:51.013 [main] INFO  com.demo.impl.UserDAOImpl - Usunięto użytkownika z ID: 2
+13:13:51.025 [main] DEBUG com.demo.impl.UserDAOImpl - Szukanie użytkownika z ID: 2
+13:13:51.026 [main] DEBUG org.hibernate.orm.results.loading - Load request found matching entity in context, but it is scheduled for removal; returning null
+13:13:51.030 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - rolling back
+13:13:51.034 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+13:13:51.037 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+13:13:51.042 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
+13:13:51.043 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
+13:13:51.044 [main] INFO  com.demo.impl.UserDAOImpl - Utworzenie użytkownika: testuser
+13:13:51.045 [main] DEBUG org.hibernate.engine.spi.ActionQueue - Executing identity-insert immediately
+13:13:51.046 [main] DEBUG org.hibernate.SQL - insert into users (email,name,password,role,surname,username,id) values (?,?,?,?,?,?,default)
+13:13:51.049 [main] DEBUG org.hibernate.id.IdentifierGeneratorHelper - Natively generated identity (com.demo.models.User) : 3
+13:13:51.050 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
+13:13:51.051 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Exception clearing maxRows/queryTimeout [Obiekt jest zamknięty
 The object is already closed [90007-224]]
-13:35:30.132 [main] DEBUG com.demo.impl.UserDAOImpl - Szukanie użytkownika o nazwie: testuser
-13:35:30.133 [main] DEBUG org.hibernate.orm.query.hql - HQL : SELECT u FROM User u WHERE u.username = :username
-13:35:30.136 [main] DEBUG org.hibernate.query.hql.internal.SemanticQueryBuilder - Handling root path - User
-13:35:30.137 [main] DEBUG org.hibernate.orm.query.sqm.creation - Applying inferable type to SqmExpression [SqmNamedParameter(username)] : null -> BasicSqmPathSource(username : String)
-13:35:30.139 [main] DEBUG org.hibernate.orm.query.sqm.ast - SqmStatement Tree :
+13:13:51.052 [main] DEBUG com.demo.impl.UserDAOImpl - Szukanie użytkownika o nazwie: testuser
+13:13:51.052 [main] DEBUG org.hibernate.orm.query.hql - HQL : SELECT u FROM User u WHERE u.username = :username
+13:13:51.055 [main] DEBUG org.hibernate.query.hql.internal.SemanticQueryBuilder - Handling root path - User
+13:13:51.056 [main] DEBUG org.hibernate.orm.query.sqm.creation - Applying inferable type to SqmExpression [SqmNamedParameter(username)] : null -> BasicSqmPathSource(username : String)
+13:13:51.057 [main] DEBUG org.hibernate.orm.query.sqm.ast - SqmStatement Tree :
     -> [select]
       -> [query-spec]
         -> [select]
@@ -57,11 +57,11 @@ The object is already closed [90007-224]]
       <- [query-spec]
     <- [select]
 
-13:35:30.144 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : u1_0
-13:35:30.144 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.demo.models.User(u))] with identifierForTableGroup [com.demo.models.User] for NavigablePath [com.demo.models.User] 
-13:35:30.148 [main] DEBUG org.hibernate.query.sqm.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : SqmNamedParameter(username)
-13:35:30.165 [main] DEBUG org.hibernate.query.sqm.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.demo.models.User(u).username) 
-13:35:30.171 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
+13:13:51.058 [main] DEBUG org.hibernate.orm.sql.ast.create - Created new SQL alias : u1_0
+13:13:51.058 [main] DEBUG org.hibernate.orm.sql.ast.create - Registration of TableGroup [StandardTableGroup(com.demo.models.User(u))] with identifierForTableGroup [com.demo.models.User] for NavigablePath [com.demo.models.User] 
+13:13:51.059 [main] DEBUG org.hibernate.query.sqm.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmParameter : SqmNamedParameter(username)
+13:13:51.060 [main] DEBUG org.hibernate.query.sqm.sql.BaseSqmToSqlAstConverter - Determining mapping-model type for SqmPath : SqmBasicValuedSimplePath(com.demo.models.User(u).username) 
+13:13:51.064 [main] DEBUG org.hibernate.orm.results.graph.AST - DomainResult Graph:
  \-EntityResultImpl [com.demo.models.User(u)]
  |  +-BasicFetch [com.demo.models.User(u).email]
  |  +-BasicFetch [com.demo.models.User(u).name]
@@ -70,7 +70,7 @@ The object is already closed [90007-224]]
  |  +-BasicFetch [com.demo.models.User(u).surname]
  |  \-BasicFetch [com.demo.models.User(u).username]
 
-13:35:30.172 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
+13:13:51.065 [main] DEBUG org.hibernate.orm.sql.ast.tree - SQL AST Tree:
     SelectStatement {
       FromClause {
         StandardTableGroup (u1 : com.demo.models.User(u)) {
@@ -79,27 +79,27 @@ The object is already closed [90007-224]]
       }
     }
 
-13:35:30.173 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Processing flush-time cascades
-13:35:30.173 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Dirty checking collections
-13:35:30.174 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Flushed: 0 insertions, 0 updates, 0 deletions to 1 objects
-13:35:30.175 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
-13:35:30.175 [main] DEBUG org.hibernate.internal.util.EntityPrinter - Listing entities:
-13:35:30.177 [main] DEBUG org.hibernate.internal.util.EntityPrinter - com.demo.models.User{password=password, role=USER, surname=Kowalski, name=Jan, id=3, email=test@test.com, username=testuser}
-13:35:30.177 [main] DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
-13:35:30.178 [main] DEBUG org.hibernate.orm.results - Initializer list
-13:35:30.178 [main] DEBUG org.hibernate.orm.results -     com.demo.models.User(u) -> EntityResultInitializer(com.demo.models.User(u))@1089081173 (SingleTableEntityPersister(com.demo.models.User))
-13:35:30.178 [main] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.role,u1_0.surname,u1_0.username from users u1_0 where u1_0.username=?
-13:35:30.193 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [3]
-13:35:30.194 [main] DEBUG org.hibernate.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.demo.models.User(u)): 3
-13:35:30.194 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@27d74f45
-13:35:30.197 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - rolling back
-13:35:30.198 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
-13:35:30.199 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
-13:35:30.209 [main] DEBUG org.hibernate.internal.SessionFactoryImpl - HHH000031: Closing
-13:35:30.212 [main] DEBUG org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl - HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
-13:35:30.216 [main] DEBUG org.hibernate.SQL - drop table if exists users cascade 
-13:35:30.217 [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@40f06edc] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-13:35:30.244 [main] DEBUG org.hibernate.type.spi.TypeConfiguration$Scope - Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@7b3556d7] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@3ea4712b]
-13:35:30.245 [main] DEBUG org.hibernate.service.internal.AbstractServiceRegistryImpl - Implicitly destroying ServiceRegistry on de-registration of all child ServiceRegistries
-13:35:30.245 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001008: Cleaning up connection pool [jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1]
-13:35:30.249 [main] DEBUG org.hibernate.boot.registry.internal.BootstrapServiceRegistryImpl - Implicitly destroying Boot-strap registry on de-registration of all child ServiceRegistries
+13:13:51.065 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Processing flush-time cascades
+13:13:51.066 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Dirty checking collections
+13:13:51.066 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Flushed: 0 insertions, 0 updates, 0 deletions to 1 objects
+13:13:51.066 [main] DEBUG org.hibernate.event.internal.AbstractFlushingEventListener - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
+13:13:51.066 [main] DEBUG org.hibernate.internal.util.EntityPrinter - Listing entities:
+13:13:51.066 [main] DEBUG org.hibernate.internal.util.EntityPrinter - com.demo.models.User{password=password, role=USER, surname=Kowalski, name=Jan, id=3, email=test@test.com, username=testuser}
+13:13:51.067 [main] DEBUG org.hibernate.orm.sql.exec - Skipping reading Query result cache data: cache-enabled = false, cache-mode = NORMAL
+13:13:51.068 [main] DEBUG org.hibernate.orm.results - Initializer list
+13:13:51.068 [main] DEBUG org.hibernate.orm.results -     com.demo.models.User(u) -> EntityResultInitializer(com.demo.models.User(u))@606207330 (SingleTableEntityPersister(com.demo.models.User))
+13:13:51.068 [main] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.name,u1_0.password,u1_0.role,u1_0.surname,u1_0.username from users u1_0 where u1_0.username=?
+13:13:51.073 [main] DEBUG org.hibernate.orm.results - Extracted JDBC value [0] - [3]
+13:13:51.074 [main] DEBUG org.hibernate.orm.results.loading.entity - (EntityResultInitializer) Hydrated EntityKey (com.demo.models.User(u)): 3
+13:13:51.074 [main] DEBUG org.hibernate.orm.results.loading - Calling top-level assembler (0 / 1) : org.hibernate.sql.results.graph.entity.internal.EntityAssembler@40f06edc
+13:13:51.078 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - rolling back
+13:13:51.079 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+13:13:51.079 [main] DEBUG org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl - Initiating JDBC connection release from afterTransaction
+13:13:51.085 [main] DEBUG org.hibernate.internal.SessionFactoryImpl - HHH000031: Closing
+13:13:51.085 [main] DEBUG org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl - HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+13:13:51.087 [main] DEBUG org.hibernate.SQL - drop table if exists users cascade 
+13:13:51.087 [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@1a6bcdf9] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+13:13:51.093 [main] DEBUG org.hibernate.type.spi.TypeConfiguration$Scope - Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@24473f80] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@7937a60e]
+13:13:51.093 [main] DEBUG org.hibernate.service.internal.AbstractServiceRegistryImpl - Implicitly destroying ServiceRegistry on de-registration of all child ServiceRegistries
+13:13:51.094 [main] INFO  org.hibernate.orm.connections.pooling - HHH10001008: Cleaning up connection pool [jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1]
+13:13:51.096 [main] DEBUG org.hibernate.boot.registry.internal.BootstrapServiceRegistryImpl - Implicitly destroying Boot-strap registry on de-registration of all child ServiceRegistries

@@ -25,7 +25,7 @@ public class App
 
         em.getTransaction().begin();
         User user = new User();
-        user.setUsername("admin2");
+        user.setUsername("admin4");
         user.setPassword("admin");
         user.setEmail("admin@admin.com");
         user.setName("admin");
