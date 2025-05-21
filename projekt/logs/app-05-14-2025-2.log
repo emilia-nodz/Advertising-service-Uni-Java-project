@@ -46,14 +46,14 @@
 13:35:27.247 [main] DEBUG org.hibernate.stat.internal.StatisticsInitiator - Statistics initialized [enabled=false]
 13:35:27.272 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
 13:35:27.272 [main] DEBUG org.hibernate.engine.transaction.internal.TransactionImpl - begin
-13:35:27.289 [main] INFO  com.demo.impl.UserDAOImpl - Utworzenie użytkownika: admin
+13:35:27.289 [main] INFO  com.demo.dao.UserDAOImpl - Utworzenie użytkownika: admin
 13:35:27.344 [main] DEBUG org.hibernate.engine.spi.ActionQueue - Executing identity-insert immediately
 13:35:27.376 [main] DEBUG org.hibernate.SQL - insert into users (email,name,password,role,surname,username,id) values (?,?,?,?,?,?,default)
 13:35:27.471 [main] DEBUG org.hibernate.id.IdentifierGeneratorHelper - Natively generated identity (com.demo.models.User) : 1
 13:35:27.645 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - HHH000387: ResultSet's statement was not registered
 13:35:27.665 [main] DEBUG org.hibernate.resource.jdbc.internal.ResourceRegistryStandardImpl - Exception clearing maxRows/queryTimeout [Obiekt jest zamknięty
 The object is already closed [90007-224]]
-13:35:27.680 [main] DEBUG com.demo.impl.UserDAOImpl - Szukanie użytkowników z rolą: ADMIN
+13:35:27.680 [main] DEBUG com.demo.dao.UserDAOImpl - Szukanie użytkowników z rolą: ADMIN
 13:35:27.690 [main] DEBUG org.hibernate.orm.query.hql - HQL : SELECT u FROM User u WHERE u.role = :role
 13:35:28.956 [main] DEBUG org.hibernate.query.hql.internal.SemanticQueryBuilder - Handling root path - User
 13:35:29.039 [main] DEBUG org.hibernate.orm.query.sqm.creation - Applying inferable type to SqmExpression [SqmNamedParameter(role)] : null -> BasicSqmPathSource(role : UserRole)

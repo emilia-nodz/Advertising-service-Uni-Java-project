@@ -2,7 +2,6 @@ package com.demo.servlets;
 
 import com.demo.dao.UserDAO;
 import com.demo.models.*;
-import com.demo.impl.*;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceContext;
@@ -20,10 +19,6 @@ import java.io.IOException;
 
 @WebServlet("/addUser")
 public class AddUserServlet extends HttpServlet {
-
-    @PersistenceContext(unitName = "myPU")
-    private EntityManager em;
-
     @Inject
     private UserDAO userDAO;
 
@@ -46,7 +41,7 @@ public class AddUserServlet extends HttpServlet {
             user.setSurname(surname);
             user.setRole(role);
 
-            userDAO.create(user);
+            userDAO.save(user);
 
             response.sendRedirect("addUser.html");
 
