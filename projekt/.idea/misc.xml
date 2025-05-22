@@ -8,8 +8,5 @@
       </list>
     </option>
   </component>
-  <component name="ProjectResources">
-    <resource url="https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_4_1.xsd" location="$PROJECT_DIR$/../../xsd/web-facesconfig_4_1.xsd" />
-  </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="21" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK" />
 </project>
