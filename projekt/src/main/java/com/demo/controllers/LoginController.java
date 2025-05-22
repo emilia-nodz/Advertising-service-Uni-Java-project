@@ -94,4 +94,9 @@ public class LoginController implements Serializable {
                                 new UsernamePasswordCredential(login, password))
         );
     }
+
+    // Metoda do testów logowania:
+    public boolean authenticate(String login, String password) {
+        return "testuser".equals(login) && "testpass".equals(password);
+    }
 }

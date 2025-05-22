@@ -4,6 +4,9 @@ import com.demo.models.*;
 import com.demo.dao.*;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -13,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
     @EJB
     private UserDAO userDao;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public User findByLogin(String login) {
@@ -43,5 +49,10 @@ public class UserServiceImpl implements UserService {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not supported", e);
         }
+    }
+
+    // Do testów:
+    public void setEntityManager(EntityManager em) {
+        this.em = em;
     }
 }
