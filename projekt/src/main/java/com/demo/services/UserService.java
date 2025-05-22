@@ -5,4 +5,5 @@ import com.demo.models.*;
 public interface UserService {
     public User findByLogin(String login);
     public boolean verify(String login, String password);
+    public void save(User user);
 }

@@ -26,5 +26,13 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/login.xhtml?error=true</form-error-page>
+        </form-login-config>
+    </login-config>
     <deny-uncovered-http-methods />
 </web-app>

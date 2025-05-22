@@ -1,10 +1,12 @@
 package com.demo.controllers;
 
 import com.demo.bean.UserBean;
+import com.demo.models.User;
 import com.demo.services.UserService;
 import com.demo.util.JSF;
 import jakarta.ejb.EJB;
 import jakarta.faces.annotation.ManagedProperty;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
@@ -21,7 +23,7 @@ import java.io.Serializable;
 
 import static jakarta.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
 
-@Named
+@Named("loginController")
 @ViewScoped
 public class LoginController implements Serializable {
 
@@ -46,6 +48,7 @@ public class LoginController implements Serializable {
     private String login;
     private String password;
 
+    // Gettery i settery:
     public String getLogin() {
         return login;
     }
@@ -63,23 +66,23 @@ public class LoginController implements Serializable {
     }
 
     public void onLogin() throws IOException {
-        switch (continueAuthentication()) {
-            case SEND_CONTINUE:
-                facesContext.responseComplete();
-                break;
-            case SEND_FAILURE:
-                JSF.addErrorMessage("Niepoprawne dane");
-                break;
-            case SUCCESS:
+        try {
+            if (userService.verify(login, password)) {
+                User user = userService.findByLogin(login);
+                userBean.setUser(user);
                 JSF.redirect("index.xhtml");
-                break;
-            case NOT_DONE:
+            } else {
+                JSF.addErrorMessage("Niepoprawna nazwa użytkownika lub hasło");
+            }
+        } catch (Exception e) {
+            JSF.addErrorMessage("Błąd podczas logowania: " + e.getMessage());
         }
     }
 
     public void onLogout() throws IOException {
+        userBean.setUser(null);
         JSF.invalidateSession();
-        JSF.redirect("index.xhtml");;
+        JSF.redirect("index.xhtml");
     }
 
     private AuthenticationStatus continueAuthentication() {
