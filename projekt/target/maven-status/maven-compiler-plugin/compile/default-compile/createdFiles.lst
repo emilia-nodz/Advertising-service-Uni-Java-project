@@ -1,0 +1,17 @@
+com\demo\App.class
+com\demo\dao\AbstractDAOImpl.class
+com\demo\services\UserService.class
+com\demo\services\UserServiceImpl.class
+com\demo\models\AbstractModel.class
+com\demo\dao\UserDAO.class
+com\demo\controllers\RegisterController.class
+com\demo\models\Account.class
+com\demo\util\JSF.class
+com\demo\bean\UserBean.class
+com\demo\controllers\LoginController.class
+com\demo\RestApplication.class
+com\demo\Configuration.class
+com\demo\models\UserRole.class
+com\demo\dao\UserDAOImpl.class
+com\demo\models\User.class
+com\demo\dao\AbstractDAO.class
