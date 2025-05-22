@@ -29,11 +29,10 @@ bin/
 .DS_Store
 
 ### target folder ###
-projekt/target/.
+projekt/target/
 !projekt/target/jacoco.exec
-*/target/.
+*/target/
 
-### logi ###
-projekt/logs/.
-logs/.
-
+### logs folders ###
+projekt/logs/
+logs/
