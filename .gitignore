@@ -36,3 +36,5 @@ projekt/target/
 ### logs folders ###
 projekt/logs/
 logs/
+
+projekt/h2data.*
