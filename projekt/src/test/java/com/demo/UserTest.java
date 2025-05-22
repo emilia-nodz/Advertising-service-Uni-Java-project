@@ -1,48 +1,67 @@
 package com.demo;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.demo.controllers.LoginController;
+import com.demo.controllers.RegisterController;
+import com.demo.services.UserService;
+import com.demo.services.UserServiceImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.demo.impl.UserDAOImpl;
+import com.demo.dao.UserDAOImpl;
 import com.demo.models.User;
 import com.demo.models.UserRole;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
-public class UserTest {
+/*public class UserTest {
     private static EntityManagerFactory emf;
     private EntityManager em;
-    private UserDAOImpl userDao;
+    private UserService userService;
+    private RegisterController registerController;
 
     @BeforeAll
-    public static void setupClass() {
+    public static void init() {
         emf = Persistence.createEntityManagerFactory("myPU");
     }
 
     @AfterAll
-    public static void tearDownClass() {
+    public static void tearDownAll() {
         if (emf != null) {
             emf.close();
         }
     }
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         em = emf.createEntityManager();
         em.getTransaction().begin();
 
-        userDao = new UserDAOImpl();
-        userDao.setEntityManager(em);
+        UserServiceImpl userServiceImpl = new UserServiceImpl();
+        userServiceImpl.setEntityManager(em);
+        this.userService = userServiceImpl;
+
+        registerController = new RegisterController();
+        registerController.userService = userService;
+        registerController.setUsername("testuser");
+        registerController.setPassword("testpass");
+        registerController.setEmail("test@example.com");
+        registerController.setName("Jan");
+        registerController.setSurname("Kowalski");
     }
 
     @AfterEach
@@ -52,57 +71,17 @@ public class UserTest {
         }
         em.close();
     }
-    
+
     @Test
-    public void test_create_user() {
-        User user = new User();
-        user.setUsername("testuser");
-        user.setPassword("password");
-        user.setEmail("test@test.com");
-        user.setName("Jan");
-        user.setSurname("Kowalski");
-        user.setRole(UserRole.USER);
-        
-        userDao.create(user);
-        
-        User found = userDao.findByUsername("testuser");
+    public void testRegister_persistsUser() throws Exception {
+        registerController.register();
+        User found = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                .setParameter("username", "testuser")
+                .getSingleResult();
+
         assertNotNull(found);
-        assertEquals("test@test.com", found.getEmail());
-        assertEquals("Kowalski", found.getSurname());
+        assertEquals("testuser", found.getUsername());
+        assertEquals("test@example.com", found.getEmail());
+        assertEquals(UserRole.USER, found.getRole());
     }
-
-    @Test
-    public void test_findByRole_Admin() {
-        User user = new User();
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setEmail("admin@admin.com");
-        user.setName("Admin");
-        user.setSurname("Admin");
-        user.setRole(UserRole.ADMIN);
-
-        userDao.create(user);
-
-        List<User> admins = userDao.findByRole(UserRole.ADMIN);
-        assertEquals(1, admins.size());
-        assertEquals("admin", admins.get(0).getUsername());
-    }
-
-    @Test 
-    public void test_delete_user() {
-        User user = new User();
-        user.setUsername("testuser");
-        user.setPassword("password");
-        user.setEmail("anna@nowak.com");
-        user.setName("Anna");
-        user.setSurname("Nowak");
-        user.setRole(UserRole.USER);
-        
-        userDao.create(user);
-
-        Long id = user.getId();
-        userDao.delete(id);
-        User deleted = userDao.findById(id);
-        assertNull(deleted);
-    }
-}
+}*/

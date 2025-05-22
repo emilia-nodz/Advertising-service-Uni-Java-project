@@ -2,30 +2,23 @@ package com.demo.models;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
+@NamedQuery(name = "User.findByLogin",
+        query = "SELECT u FROM User u WHERE u.username = :login")
+@NamedQuery(name = "User.findByRole",
+        query = "SELECT u FROM User u WHERE u.role = :role")
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User extends AbstractModel {
     // Pola w tabeli:
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(nullable = false, length = 50)
@@ -42,7 +35,8 @@ public class User implements Serializable {
     public User() {}
 
     // Konstruktor z parametrami:
-    public User(String username, String email, String password, String name, String surname, UserRole role) {
+    public User(Long id, String username, String email, String password, String name, String surname, UserRole role) {
+        super(id);
         this.username = username;
         this.email = email;
         this.password = password;
@@ -52,8 +46,6 @@ public class User implements Serializable {
     }
 
     // Gettery i Settery
-    public Long getId() { return id; }
-
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
