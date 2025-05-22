@@ -22,7 +22,7 @@ public class RegisterController implements Serializable {
     private String surname;
 
     @EJB
-    public UserService userService;
+    private UserService userService;
 
     public void register() throws IOException {
         try {

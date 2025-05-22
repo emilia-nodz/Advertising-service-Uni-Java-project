@@ -17,9 +17,6 @@ public class UserServiceImpl implements UserService {
     @EJB
     private UserDAO userDao;
 
-    @PersistenceContext
-    private EntityManager em;
-
     @Override
     public User findByLogin(String login) {
         return userDao.findByLogin(login).orElse(null);
@@ -45,14 +42,9 @@ public class UserServiceImpl implements UserService {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] encodedHash = digest.digest(password.getBytes());
-            return Base64.getEncoder().encodeToString(encodedHash); // lub hex
+            return Base64.getEncoder().encodeToString(encodedHash);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not supported", e);
         }
-    }
-
-    // Do testów:
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
     }
 }
