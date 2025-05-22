@@ -1,5 +1,6 @@
 package com.demo.dao;
 
+import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
 import org.apache.logging.log4j.LogManager;
@@ -51,4 +52,14 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
                 .setParameter("author", author)
                 .getResultList();
     }
+
+    @Override
+    public List<Notice> findByCategory(Category category) {
+        logger.debug("Szukanie ogłoszeń po kategorii: {}", category.getName());
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.category = :category", Notice.class)
+                .setParameter("category", category)
+                .getResultList();
+    }
+
 }

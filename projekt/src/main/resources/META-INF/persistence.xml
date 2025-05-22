@@ -6,7 +6,9 @@
 
     <persistence-unit name="myPU" transaction-type="JTA">
         <jta-data-source>jdbc/myPostgres</jta-data-source>
-        <class>com.example.models.User</class>
+        <class>com.demo.models.User</class>
+        <class>com.demo.models.Notice</class>
+        <class>com.demo.models.Category</class>
 
          <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
