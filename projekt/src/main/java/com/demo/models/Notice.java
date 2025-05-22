@@ -8,12 +8,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "NOTICE")
-public class Notice {
+public class Notice extends AbstractModel{
     // Pola w tabeli
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
     @Column(nullable = false, length = 100)
     private String title;
 
@@ -59,7 +55,8 @@ public class Notice {
     public Notice() {}
 
     // Konstruktor z parametrami
-    public Notice(String title, String description, int amount, User author, Category category) {
+    public Notice(Long id, String title, String description, int amount, User author, Category category) {
+        super(id);
         this.title = title;
         this.description = description;
         this.amount = amount;
@@ -71,14 +68,6 @@ public class Notice {
     }
 
     // Gettery i settery
-    public UUID getId() {
-        return this.id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return this.title;
     }
