@@ -23,10 +23,23 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <!-- Role -->
+    <security-role>
+        <role-name>ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <role-name>USER</role-name>
+    </security-role>
+    <security-role>
+        <role-name>MODERATOR</role-name>
+    </security-role>
+
+    <!-- Strona główna -->
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
+    <!-- Strona logowania (formularz)-->
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
@@ -34,5 +47,7 @@
             <form-error-page>/login.xhtml?error=true</form-error-page>
         </form-login-config>
     </login-config>
+
+    <!-- TODO Panel administratora (tu trzeba dodać konfigurację, ale póki co coś nie pasi) -->
     <deny-uncovered-http-methods />
 </web-app>
