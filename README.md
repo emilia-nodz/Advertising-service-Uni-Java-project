@@ -37,18 +37,18 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
 - Ustawianie parametrów systemowych (np. czas wygaśnięcia ogłoszeń, treść maili dotyczących powiadomień)
 
 ## Użyte technologie oraz biblioteki
-*JDK*
+*JDK:*
 - Java Development Kit: 17
 
-*Serwer aplikacyjny*
+*Serwer aplikacyjny:*
 - Jakarta EE: 10.0.0
 - Payara 6
 
-*Baza danych*
+*Baza danych:*
 - H2 Database: 2.2.224 (do testów/developmentu)
 - PostgreSQL JDBC Driver: 42.7.3 (produkcyjna baza danych)
 
-*Biblioteki*
+*Biblioteki:*
 - Jakarta EE Web API: 10.0.0
 - Hibernate ORM: 6.2.7 (implementacja JPA)
 - Jakarta Persistence API: 3.1.0 (specyfikacja JPA)
@@ -56,7 +56,7 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
 - PrimeFaces: 12.0.0
 - Log4j2: 2.20.0 (dziennik zdarzeń)
 
-*Testy jednostkowe*
+*Testy jednostkowe:*
 - JUnit 5: 5.12.0
 - Mockito: 5.16.0
 - JaCoCo: 0.8.11
