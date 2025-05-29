@@ -4,22 +4,46 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Strona główna</title>
+    <!-- Style tymczasowo tutaj, gdyż nie widzi ich z folderu resources -->
+    <style>
+        .navbar {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .navbar a, .navbar span {
+            margin-right: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #333;
+        }
+        .navbar .right {
+            float: right;
+        }
+    </style>
 </h:head>
 <h:body>
-    <h:panelGroup rendered="#{not empty userBean.user}">
-        <h1>Witaj, #{userBean.user.username}!</h1>
-        <p>Jesteś zalogowany.</p>
-        <h:form>
-            <h:commandButton value="Wyloguj się" action="#{loginController.onLogout}" />
-        </h:form>
-    </h:panelGroup>
+    <div class="navbar">
+        <h:panelGroup rendered="#{userBean.logged}">
+            <span>Witaj, #{userBean.username}</span>
 
-    <h:panelGroup rendered="#{empty userBean.user}">
-        <h1>Witaj na stronie!</h1>
-        <p>Nie jesteś zalogowany.</p>
-        <h:link value="Zaloguj się" outcome="login.xhtml" />
-        <br/>
-        <h:link value="Zarejestruj się" outcome="register.xhtml" />
-    </h:panelGroup>
+            <h:panelGroup rendered="#{userBean.admin}">
+                <h:link value="Panel administratora" outcome="admin.xhtml"/>
+            </h:panelGroup>
+
+            <h:form styleClass="right">
+                <h:commandButton value="Wyloguj się" action="#{loginController.onLogout}" />
+            </h:form>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{not userBean.logged}">
+            <h:link value="Zaloguj się" outcome="login.xhtml" />
+            <h:link value="Zarejestruj się" outcome="register.xhtml" style="margin-left:10px;" />
+        </h:panelGroup>
+    </div>
+
+    <h1>Witamy na stronie!</h1>
+    <p>Tutaj pojawią się ogłoszenia c:</p>
+    <p>Twoja rola: #{userBean.user.role}</p>
 </h:body>
 </html>

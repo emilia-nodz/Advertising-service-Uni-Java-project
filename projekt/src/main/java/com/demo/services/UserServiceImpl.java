@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.List;
 
 @Stateless
 public class UserServiceImpl implements UserService {
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
     public User findByLogin(String login) {
         return userDao.findByLogin(login).orElse(null);
     }
+
+    @Override
+    public List<User> findAll() { return userDao.findAll(); }
 
     @Override
     public boolean verify(String login, String password) {

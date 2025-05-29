@@ -1,7 +1,9 @@
 package com.demo.bean;
 
 import com.demo.models.User;
+import com.demo.models.UserRole;
 import com.demo.services.UserService;
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
@@ -22,6 +24,14 @@ public class UserBean implements Serializable {
 
     private User user;
 
+    @PostConstruct
+    public void init() {
+        Principal principal = securityContext.getCallerPrincipal();
+        if (principal != null) {
+            user = userService.findByLogin(principal.getName());
+        }
+    }
+
     public User getUser() {
         return user;
     }
@@ -31,19 +41,14 @@ public class UserBean implements Serializable {
     }
 
     public boolean isLogged() {
-        return getUsername() != null;
+        return user != null;
+    }
+
+    public boolean isAdmin() {
+        return user != null && user.getRole() == UserRole.ADMIN;
     }
 
     public String getUsername() {
-        if (user != null) {
-            return user.getUsername();
-        }
-
-        Principal principal = securityContext.getCallerPrincipal();
-        if (principal != null) {
-            user = userService.findByLogin(principal.getName());
-        }
-
         return user != null ? user.getUsername() : null;
     }
 }
