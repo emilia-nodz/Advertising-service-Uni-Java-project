@@ -11,6 +11,8 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
   - [emilia-nodz](https://github.com/emilia-nodz)
   - [wersosn](https://github.com/wersosn)
     -  Uwierzytelnianie
+    -  Zarządzanie użytkownikami (zmiana roli)
+    -  Zarządzanie kategoriami
          
 [//]: # (Potem jakoś inaczej to powpisujemy)
   - [TamaTamaTamaTamaTama](https://github.com/TamaTamaTamaTamaTama)
