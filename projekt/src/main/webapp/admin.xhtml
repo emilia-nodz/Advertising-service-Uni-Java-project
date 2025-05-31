@@ -6,16 +6,17 @@
       lang="pl">
 <h:head>
     <title>Panel administratora</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
 </h:head>
 <h:body>
     <f:metadata>
         <f:event type="preRenderView" listener="#{adminController.checkAccess}" />
     </f:metadata>
 
-    <h:panelGroup rendered="#{userBean.admin}">
-        <h1>Panel administratora</h1>
+    <h1>Panel administratora</h1>
 
-        <h:dataTable value="#{adminController.allUsers}" var="u" border="1">
+    <h:form>
+        <h:dataTable value="#{adminController.allUsers}" var="u" styleClass="table">
             <h:column>
                 <f:facet name="header">ID</f:facet>
                 #{u.id}
@@ -30,9 +31,17 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Rola</f:facet>
-                #{u.role}
+                <h:selectOneMenu value="#{u.role}">
+                    <f:selectItems value="#{adminController.availableRoles}" var="role"
+                                   itemLabel="#{role}" itemValue="#{role}" />
+                </h:selectOneMenu>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Akcja</f:facet>
+                <h:commandButton value="Zapisz" action="#{adminController.updateUserRole(u)}"
+                                 styleClass="btn"/>
             </h:column>
         </h:dataTable>
-    </h:panelGroup>
+    </h:form>
 </h:body>
 </html>
