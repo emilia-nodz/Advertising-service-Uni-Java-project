@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class UserServiceImpl implements UserService {
@@ -37,9 +38,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        String hashed = hashPassword(user.getPassword());
-        user.setPassword(hashed);
-        userDao.save(user);
+        if (user.getId() == null) {
+            String hashed = hashPassword(user.getPassword());
+            user.setPassword(hashed);
+            userDao.save(user);
+        }
+    }
+
+    @Override
+    public void updateUserRole(Long userId, UserRole newRole) {
+        Optional<User> optional = userDao.findById(userId);
+        if (optional.isPresent()) {
+            User user = optional.get();
+            user.setRole(newRole);
+            userDao.update(user);
+        } else {
+            throw new IllegalArgumentException("Nie znaleziono użytkownika o id: " + userId);
+        }
     }
 
     private String hashPassword(String password) {

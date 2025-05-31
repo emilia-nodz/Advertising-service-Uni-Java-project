@@ -9,4 +9,5 @@ public interface UserService {
     public List<User> findAll();
     public boolean verify(String login, String password);
     public void save(User user);
+    public void updateUserRole(Long userId, UserRole newRole);
 }
