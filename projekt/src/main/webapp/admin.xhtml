@@ -6,16 +6,19 @@
       lang="pl">
 <h:head>
     <title>Panel administratora</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
 </h:head>
 <h:body>
     <f:metadata>
         <f:event type="preRenderView" listener="#{adminController.checkAccess}" />
     </f:metadata>
 
-    <h:panelGroup rendered="#{userBean.admin}">
-        <h1>Panel administratora</h1>
+    <h1>Panel administratora</h1>
 
-        <h:dataTable value="#{adminController.allUsers}" var="u" border="1">
+    <h3>Zarządzanie użytkownikami</h3>
+    <hr/>
+    <h:form>
+        <h:dataTable value="#{adminController.allUsers}" var="u" styleClass="table">
             <h:column>
                 <f:facet name="header">ID</f:facet>
                 #{u.id}
@@ -30,9 +33,46 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Rola</f:facet>
-                #{u.role}
+                <h:selectOneMenu value="#{u.role}">
+                    <f:selectItems value="#{adminController.availableRoles}" var="role" itemLabel="#{role}" itemValue="#{role}" />
+                </h:selectOneMenu>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Akcja</f:facet>
+                <h:commandButton value="Zapisz" action="#{adminController.updateUserRole(u)}" styleClass="btn"/>
             </h:column>
         </h:dataTable>
-    </h:panelGroup>
+    </h:form>
+
+    <h3>Zarządzanie kategoriami</h3>
+    <hr/>
+    <h:form>
+        <h3>Dodaj kategorię</h3>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="name" value="Nazwa:" />
+            <h:inputText id="name" value="#{categoryController.newCategory.name}" required="true" />
+            <h:commandButton value="Dodaj" action="#{categoryController.addCategory}" />
+        </h:panelGrid>
+    </h:form>
+
+    <h:form>
+        <h3>Lista kategorii</h3>
+        <h:dataTable value="#{categoryController.categories}" var="c" styleClass="table">
+            <h:column>
+                <f:facet name="header">Nazwa</f:facet>
+                <h:inputText value="#{c.name}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edycja</f:facet>
+                <h:commandButton value="Zapisz" action="#{categoryController.updateCategory}">
+                    <f:setPropertyActionListener value="#{c}" target="#{categoryController.selectedCategory}" />
+                </h:commandButton>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Usuwanie</f:facet>
+                <h:commandButton value="Usuń" action="#{categoryController.deleteCategory(c)}" />
+            </h:column>
+        </h:dataTable>
+    </h:form>
 </h:body>
 </html>

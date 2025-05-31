@@ -43,6 +43,15 @@ public class AbstractDAOImpl<T extends AbstractModel> implements AbstractDAO<T> 
     }
 
     @Override
+    public T update(T t) {
+        if (t.getId() == null) {
+            throw new IllegalArgumentException("Nie można zaktualizować obiektu bez id");
+        }
+        logger.debug("Aktualizacja obiektu z id: {}", t.getId());
+        return em.merge(t);
+    }
+
+    @Override
     public void delete(Long id) {
         logger.debug("Usuwanie obiektu z id = {}", id);
         T t = em.getReference(type, id);

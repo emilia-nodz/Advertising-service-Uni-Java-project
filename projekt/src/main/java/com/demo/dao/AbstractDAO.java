@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface AbstractDAO <T extends AbstractModel>  {
     T save(T t);
+    T update(T t);
     void delete(Long id);
     Optional<T> findById(Long id);
     List<T> findAll();

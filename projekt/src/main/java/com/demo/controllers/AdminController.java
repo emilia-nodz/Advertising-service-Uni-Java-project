@@ -7,6 +7,7 @@ import com.demo.util.JSF;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -14,6 +15,7 @@ import jakarta.inject.Named;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 @Named("adminController")
@@ -37,10 +39,19 @@ public class AdminController implements Serializable {
         return allUsers;
     }
 
+    public List<UserRole> getAvailableRoles() {
+        return Arrays.asList(UserRole.values());
+    }
+
     public void checkAccess() throws IOException {
         if (userBean.getUser() == null || !userBean.isAdmin()) {
             JSF.redirect("login.xhtml");
             FacesContext.getCurrentInstance().responseComplete();
         }
+    }
+
+    public void updateUserRole(User user) {
+        userService.updateUserRole(user.getId(), user.getRole());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Zmieniono rolę użytkownika", null));
     }
 }

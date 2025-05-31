@@ -3,8 +3,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "CATEGORY")
-public class Category extends AbstractModel{
-      @Column(nullable = false, length = 100)
+public class Category extends AbstractModel {
+
+    @Column(nullable = false, length = 100)
     private String name;
 
     // Konstruktor domyślny:
@@ -28,6 +29,4 @@ public class Category extends AbstractModel{
     public String toString() {
         return "Category name = " + name;
     }
-
-
 }
