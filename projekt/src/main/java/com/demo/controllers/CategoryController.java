@@ -53,19 +53,16 @@ public class CategoryController implements Serializable {
         categoryService.save(newCategory);
         categories = categoryService.findAll();
         newCategory = new Category();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano kategorię: " + newCategory.getName()));
     }
 
     public void updateCategory() {
         if (selectedCategory != null) {
             categoryService.save(selectedCategory);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zaktualizowano kategorię: " + selectedCategory.getName()));
         }
     }
 
     public void deleteCategory(Category category) {
         categoryService.delete(category);
         categories = categoryService.findAll();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usunięto kategorię"));
     }
 }

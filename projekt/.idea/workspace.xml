@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7a42fd5-3ab8-403d-8091-c4ef0ff51242" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/controllers/CategoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/CategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/CategoryServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/navbar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/demo/AdminControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/dao/AbstractDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/dao/AbstractDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/dao/AbstractDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/dao/AbstractDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/CategoryControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/CategoryControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

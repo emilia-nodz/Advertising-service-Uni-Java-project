@@ -6,7 +6,6 @@ import com.demo.services.UserService;
 import com.demo.util.JSF;
 import jakarta.ejb.EJB;
 import jakarta.faces.annotation.ManagedProperty;
-import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
@@ -20,8 +19,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
-
-import static jakarta.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
 
 @Named("loginController")
 @ViewScoped
@@ -95,8 +92,12 @@ public class LoginController implements Serializable {
         );
     }
 
-    // Metoda do testów logowania:
+    // Metody do testów: (ze względu na problemy z mockowaniem JSF/FacesContext)
     public boolean authenticate(String login, String password) {
-        return "testuser".equals(login) && "testpass".equals(password);
+        return userService.verify(login, password);
+    }
+
+    public void logoutUser() {
+        userBean.setUser(null);
     }
 }
