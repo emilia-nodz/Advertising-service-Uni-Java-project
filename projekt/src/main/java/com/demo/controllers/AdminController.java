@@ -54,4 +54,18 @@ public class AdminController implements Serializable {
         userService.updateUserRole(user.getId(), user.getRole());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Zmieniono rolę użytkownika", null));
     }
+
+    // Metody do testów: (ze względu na problemy z mockowaniem JSF/FacesContext)
+    public boolean isUserAdmin() {
+        return userBean.getUser() != null && userBean.isAdmin();
+    }
+
+    public boolean changeUserRole(Long userId, UserRole newRole) {
+        try {
+            userService.updateUserRole(userId, newRole);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

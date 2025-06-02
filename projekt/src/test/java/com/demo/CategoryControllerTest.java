@@ -2,8 +2,6 @@ package com.demo;
 import com.demo.controllers.CategoryController;
 import com.demo.models.Category;
 import com.demo.services.CategoryService;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
@@ -13,8 +11,6 @@ import java.util.List;
 
 import static junit.framework.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
