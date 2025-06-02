@@ -93,11 +93,6 @@
         <version>6.2.7.Final</version>
     </dependency>
     <dependency>
-        <groupId>org.eclipse</groupId>
-        <artifactId>yasson</artifactId>
-        <version>3.0.3</version>
-    </dependency>
-    <dependency>
         <groupId>jakarta.json.bind</groupId>
         <artifactId>jakarta.json.bind-api</artifactId>
         <version>3.0.0</version>
@@ -168,9 +163,16 @@
       </dependency>
 
       <dependency>
-          <groupId>org.mindrot</groupId>
-          <artifactId>jbcrypt</artifactId>
-          <version>0.4</version>
+          <groupId>jakarta.faces</groupId>
+          <artifactId>jakarta.faces-api</artifactId>
+          <version>4.0.0</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish</groupId>
+          <artifactId>jakarta.faces</artifactId>
+          <version>4.0.0</version>
+          <scope>test</scope>
       </dependency>
   </dependencies>
 </project>
