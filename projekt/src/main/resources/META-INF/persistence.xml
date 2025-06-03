@@ -13,6 +13,10 @@
          <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+             <property name="jakarta.persistence.jdbc.url"
+                       value="jdbc:postgresql://localhost:5432/db"/>
+             <property name="jakarta.persistence.jdbc.driver"
+                       value="org.postgresql.Driver"/>
         </properties>
     </persistence-unit>
 </persistence>
