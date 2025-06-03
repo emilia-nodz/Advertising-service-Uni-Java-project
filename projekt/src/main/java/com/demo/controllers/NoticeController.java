@@ -1,18 +1,24 @@
+
 package com.demo.controllers;
 
 import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
 import com.demo.services.NoticeService;
+import com.demo.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @ViewScoped
@@ -20,6 +26,9 @@ public class NoticeController implements Serializable {
 
     @Inject
     private NoticeService noticeService;
+
+    @Inject
+    private UserService userService;
 
     private Notice currentNotice;
     private List<Notice> notices;
@@ -31,12 +40,17 @@ public class NoticeController implements Serializable {
     private User searchAuthor;
     private Category searchCategory;
 
-    private Long selectedNoticeId;
+    // Automatically get logged-in user from session
+    private User getCurrentUser() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, Object> sessionMap = context.getExternalContext().getSessionMap();
+        return (User) sessionMap.get("currentUser");
+    }
 
     @PostConstruct
     public void init() {
         loadAllNotices();
-        currentNotice = new Notice();
+        prepareCreate(); // Initialize with new notice
     }
 
     public void loadAllNotices() {
@@ -56,22 +70,35 @@ public class NoticeController implements Serializable {
     }
 
     public void saveNotice() {
+        User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Nie jesteś zalogowany!"));
+            return;
+        }
+
         try {
+            // REATTACH USER HERE (CRITICAL FIX)
+            if (currentNotice.getId() == null) { // Only for new notices
+                User managedUser = userService.findById(currentUser.getId());
+                currentNotice.setAuthor(managedUser); // Reattach user!
+            }
+
             if (currentNotice.getId() == null) {
                 noticeService.save(currentNotice);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Poprawnie utworzono ogłoszenie"));
+                // ... success
             } else {
                 noticeService.update(currentNotice);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Poprawnie utworzono ogłoszenie"));
+                // ... success
             }
+            prepareCreate();
             loadAllNotices();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", e.getMessage()));
         }
     }
+
 
     public void deleteNotice(Long id) {
         try {
@@ -156,11 +183,4 @@ public class NoticeController implements Serializable {
         this.searchCategory = searchCategory;
     }
 
-    public Long getSelectedNoticeId() {
-        return selectedNoticeId;
-    }
-
-    public void setSelectedNoticeId(Long selectedNoticeId) {
-        this.selectedNoticeId = selectedNoticeId;
-    }
 }

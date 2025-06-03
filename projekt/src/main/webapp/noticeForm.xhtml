@@ -7,38 +7,89 @@
 <h:head>
     <meta charset="UTF-8" />
     <title>Logowanie</title>
-</h:head>
-<h:body>
+</h:head><h:body>
+    <ui:include src="/WEB-INF/include/navbar.xhtml" />
 
-    <h:form>
-        <h:inputText value="#{noticeController.currentNotice.title}"/>
-        <h:inputText value="#{noticeController.currentNotice.description}"/>
-        <h:inputText value="#{noticeController.currentNotice.amount}"/>
-        <h:inputText value="#{noticeController.currentNotice.category}"/>
+    <div class="form-container">
+        <h2>
+            <ui:fragment rendered="#{empty noticeController.currentNotice.id}">
+                Create New Notice
+            </ui:fragment>
+            <ui:fragment rendered="#{not empty noticeController.currentNotice.id}">
+                Edit Notice
+            </ui:fragment>
+        </h2>
 
-        <h:commandButton value="Save" action="#{noticeController.saveNotice}"/>
-    </h:form>
+        <h:messages globalOnly="true" style="color: red;"/>
 
-    <!-- Lista ogłoszeń -->
-    <h:dataTable value="#{noticeController.notices}" var="notice">
-        <h:column>#{notice.title}</h:column>
-        <h:column>
-            <h:commandButton value="Edit" action="#{noticeController.prepareUpdate(notice.id)}"/>
-            <h:commandButton value="Delete" action="#{noticeController.deleteNotice(notice.id)}"/>
-        </h:column>
-    </h:dataTable>
+        <h:form id="noticeForm">
+            <!-- Author (display only) -->
+            <div class="form-row">
+                <h:outputLabel value="Author"/>
+                <div class="read-only">
+                    <h:outputText value="#{noticeController.currentNotice.author.firstName}
+                                     #{noticeController.currentNotice.author.lastName}"/>
+                </div>
+            </div>
 
-    <!-- TODO: formularz filtrowania -->
-    <h:form>
-        <h:inputText value="#{noticeController.searchTitle}"/>
-        <h:commandButton value="Search" action="#{noticeController.search}"/>
-        <h:commandButton value="Clear" action="#{noticeController.clearSearch}"/>
-    </h:form>
+            <!-- Title -->
+            <div class="form-row">
+                <h:outputLabel for="title" value="Title *"/>
+                <h:inputText id="title"
+                             value="#{noticeController.currentNotice.title}"
+                             required="true"
+                             requiredMessage="Title is required"
+                             style="width: 100%"/>
+                <h:message for="title" styleClass="error-message"/>
+            </div>
 
-    <!-- TODO: wyniki filtrowania -->
-    <h:dataTable value="#{noticeController.searchResults}" var="result" rendered="#{not empty noticeController.searchResults}">
-        <!-- TODO: wyświetlenie szczegółów -->
-    </h:dataTable>
+            <!-- Description -->
+            <div class="form-row">
+                <h:outputLabel for="description" value="Description"/>
+                <h:inputTextarea id="description"
+                                 value="#{noticeController.currentNotice.description}"
+                                 rows="5"
+                                 style="width: 100%"/>
+            </div>
 
+            <!-- Amount -->
+            <div class="form-row">
+                <h:outputLabel for="amount" value="Amount"/>
+                <h:inputText id="amount"
+                             value="#{noticeController.currentNotice.amount}"
+                             style="width: 100%">
+                    <f:convertNumber integerOnly="true"/>
+                    <f:validateLongRange minimum="0"/>
+                </h:inputText>
+                <h:message for="amount" styleClass="error-message"/>
+            </div>
+
+            <!-- Category Selection -->
+            <h:selectOneMenu id="category"
+                             value="#{noticeController.currentNotice.category}"
+                             converter="#{categoryConverter}"
+                             required="true"
+                             requiredMessage="Category is required"
+                             style="width: 100%">
+                <f:selectItem itemValue="#{null}" itemLabel="-- Select Category --" noSelectionOption="true"/>
+                <f:selectItems value="#{categoryController.categories}"
+                               var="category"
+                               itemValue="#{category}"
+                               itemLabel="#{category.name}"/>
+            </h:selectOneMenu>
+
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <h:commandButton value="Save"
+                                 action="#{noticeController.saveNotice}"
+                                 style="margin-right: 10px;"/>
+
+                <h:commandButton value="Cancel"
+                                 action="#{noticeController.loadAllNotices}"
+                                 immediate="true"/>
+            </div>
+        </h:form>
+    </div>
 </h:body>
 </html>

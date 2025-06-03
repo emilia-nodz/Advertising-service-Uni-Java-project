@@ -5,6 +5,7 @@ import com.demo.models.*;
 import java.util.List;
 
 public interface UserService {
+    public User findById(Long id);
     public User findByLogin(String login);
     public List<User> findAll();
     public boolean verify(String login, String password);
