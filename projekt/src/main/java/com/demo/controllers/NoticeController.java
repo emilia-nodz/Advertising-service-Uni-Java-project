@@ -78,26 +78,26 @@ public class NoticeController implements Serializable {
         }
 
         try {
-            // REATTACH USER HERE (CRITICAL FIX)
-            if (currentNotice.getId() == null) { // Only for new notices
-                User managedUser = userService.findById(currentUser.getId());
-                currentNotice.setAuthor(managedUser); // Reattach user!
-            }
+            // Always use reference, regardless of notice ID
+            User managedUser = userService.getReferenceById(currentUser.getId());
+            currentNotice.setAuthor(managedUser);
+
 
             if (currentNotice.getId() == null) {
                 noticeService.save(currentNotice);
-                // ... success
             } else {
                 noticeService.update(currentNotice);
-                // ... success
             }
+
             prepareCreate();
             loadAllNotices();
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", e.getMessage()));
         }
     }
+
 
 
     public void deleteNotice(Long id) {

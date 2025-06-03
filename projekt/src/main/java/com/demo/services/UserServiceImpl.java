@@ -15,6 +15,8 @@ import java.util.Optional;
 
 @Stateless
 public class UserServiceImpl implements UserService {
+    @PersistenceContext
+    private EntityManager em;
 
     @EJB
     private UserDAO userDao;
@@ -70,5 +72,9 @@ public class UserServiceImpl implements UserService {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 not supported", e);
         }
+    }
+
+    public User getReferenceById(Long id) {
+        return em.getReference(User.class, id);
     }
 }

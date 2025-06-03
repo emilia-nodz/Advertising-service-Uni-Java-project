@@ -18,6 +18,12 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
     private static final Logger logger = LogManager.getLogger(NoticeDAOImpl.class);
 
     @Override
+    public Notice save(Notice notice) {
+        // Always merge to attach references safely
+        return em.merge(notice);
+    }
+
+    @Override
     public List<Notice> findByTitle(String title) {
         logger.debug("Szukanie ogłoszeń o nazwie: {}", title);
         return em.createQuery(

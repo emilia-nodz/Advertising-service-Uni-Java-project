@@ -39,4 +39,8 @@ public class UserDAOImpl extends AbstractDAOImpl<User> implements UserDAO {
         logger.debug("Wyszukiwanie użytkowników po nazwie użytkownika: {}", login);
         return findSingle("User.findByLogin","login",login);
     }
+
+    public User getReference(Long id) {
+        return em.getReference(User.class, id);
+    }
 }

@@ -28,8 +28,10 @@ public class Notice extends AbstractModel{
     @Column()
     private int amount;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
     private User author;
+
 
     @ManyToOne(optional = false)
     private Category category;
