@@ -7,33 +7,45 @@
 <h:head>
     <meta charset="UTF-8" />
     <title>Rejestracja</title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 </h:head>
-<h:body>
+<h:body class="bg-light" style="min-height: 100vh;">
     <ui:include src="/WEB-INF/include/navbar.xhtml" />
-    <h1>Zarejestruj się</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px);">
+        <div class="card p-4 shadow" style="min-width: 400px;">
+            <h2 class="text-center mb-4">Zarejestruj się</h2>
 
-    <h:messages globalOnly="true" layout="table" style="color:red;" />
+            <h:messages globalOnly="true" layout="table" styleClass="text-danger mb-3" />
 
-    <h:form>
-        <h:panelGrid columns="2" cellpadding="5">
+            <h:form>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nazwa użytkownika:</label>
+                    <h:inputText id="username" value="#{registerController.username}" required="true" styleClass="form-control" />
+                </div>
 
-            <h:outputLabel for="username" value="Nazwa użytkownika:" />
-            <h:inputText id="username" value="#{registerController.username}" required="true" />
+                <div class="mb-3">
+                    <label for="password" class="form-label">Hasło:</label>
+                    <h:inputSecret id="password" value="#{registerController.password}" required="true" styleClass="form-control" />
+                </div>
 
-            <h:outputLabel for="password" value="Hasło:" />
-            <h:inputSecret id="password" value="#{registerController.password}" required="true" />
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <h:inputText id="email" value="#{registerController.email}" required="true" styleClass="form-control" />
+                </div>
 
-            <h:outputLabel for="email" value="Email:" />
-            <h:inputText id="email" value="#{registerController.email}" required="true" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Imię:</label>
+                    <h:inputText id="name" value="#{registerController.name}" required="true" styleClass="form-control" />
+                </div>
 
-            <h:outputLabel for="name" value="Imię:" />
-            <h:inputText id="name" value="#{registerController.name}" required="true" />
+                <div class="mb-3">
+                    <label for="surname" class="form-label">Nazwisko:</label>
+                    <h:inputText id="surname" value="#{registerController.surname}" required="true" styleClass="form-control" />
+                </div>
 
-            <h:outputLabel for="surname" value="Nazwisko:" />
-            <h:inputText id="surname" value="#{registerController.surname}" required="true" />
-        </h:panelGrid>
-        <br/>
-        <h:commandButton value="Zarejestruj" action="#{registerController.register}" />
-    </h:form>
+                <h:commandButton value="Zarejestruj" action="#{registerController.register}" styleClass="btn w-100" style="background-color:#a5a8a6;"/>
+            </h:form>
+        </div>
+    </div>
 </h:body>
 </html>

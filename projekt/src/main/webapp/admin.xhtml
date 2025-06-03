@@ -6,19 +6,21 @@
       lang="pl">
 <h:head>
     <title>Panel administratora</title>
-    <h:outputStylesheet library="css" name="styles.css"/>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 </h:head>
 <h:body>
     <f:metadata>
         <f:event type="preRenderView" listener="#{adminController.checkAccess}" />
     </f:metadata>
 
-    <h1>Panel administratora</h1>
+    <ui:include src="/WEB-INF/include/navbar.xhtml" />
+    <div class="container mt-4">
+    <h1 style="text-align:center;">Panel administratora</h1>
 
     <h3>Zarządzanie użytkownikami</h3>
     <hr/>
     <h:form>
-        <h:dataTable value="#{adminController.allUsers}" var="u" styleClass="table">
+        <h:dataTable value="#{adminController.allUsers}" var="u" styleClass="table table-striped table-bordered">
             <h:column>
                 <f:facet name="header">ID</f:facet>
                 #{u.id}
@@ -39,7 +41,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Akcja</f:facet>
-                <h:commandButton value="Zapisz" action="#{adminController.updateUserRole(u)}" styleClass="btn"/>
+                <h:commandButton value="Zapisz" action="#{adminController.updateUserRole(u)}"/>
             </h:column>
         </h:dataTable>
     </h:form>
@@ -48,16 +50,19 @@
     <hr/>
     <h:form>
         <h3>Dodaj kategorię</h3>
-        <h:panelGrid columns="2">
-            <h:outputLabel for="name" value="Nazwa:" />
-            <h:inputText id="name" value="#{categoryController.newCategory.name}" required="true" />
-            <h:commandButton value="Dodaj" action="#{categoryController.addCategory}" />
-        </h:panelGrid>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h:inputText id="name" value="#{categoryController.newCategory.name}" required="true" styleClass="form-control" />
+            </div>
+            <div class="col-auto">
+                <h:commandButton value="Dodaj" action="#{categoryController.addCategory}"/>
+            </div>
+        </div>
     </h:form>
 
     <h:form>
         <h3>Lista kategorii</h3>
-        <h:dataTable value="#{categoryController.categories}" var="c" styleClass="table">
+        <h:dataTable value="#{categoryController.categories}" var="c" styleClass="table table-striped table-bordered">
             <h:column>
                 <f:facet name="header">Nazwa</f:facet>
                 <h:inputText value="#{c.name}" />
@@ -74,5 +79,6 @@
             </h:column>
         </h:dataTable>
     </h:form>
+    </div>
 </h:body>
 </html>

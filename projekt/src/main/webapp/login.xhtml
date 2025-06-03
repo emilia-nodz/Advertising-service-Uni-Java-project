@@ -7,24 +7,31 @@
 <h:head>
     <meta charset="UTF-8" />
     <title>Logowanie</title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 </h:head>
-<h:body>
+<h:body class="bg-light" style="min-height: 100vh;">
     <ui:include src="/WEB-INF/include/navbar.xhtml" />
-    <h1>Zaloguj się</h1>
 
-    <h:messages globalOnly="true" layout="table" style="color:red;" />
+    <div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 56px);">
+        <div class="card p-4 shadow" style="min-width: 350px;">
+            <h2 class="text-center mb-4">Zaloguj się</h2>
 
-    <h:form>
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputLabel for="username" value="Nazwa użytkownika:" />
-            <h:inputText id="username" value="#{loginController.login}" required="true" />
+            <h:messages globalOnly="true" layout="table" styleClass="text-danger mb-3" />
 
-            <h:outputLabel for="password" value="Hasło:" />
-            <h:inputSecret id="password" value="#{loginController.password}" required="true" />
-        </h:panelGrid>
+            <h:form>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nazwa użytkownika:</label>
+                    <h:inputText id="username" value="#{loginController.login}" required="true" styleClass="form-control" />
+                </div>
 
-        <br/>
-        <h:commandButton value="Zaloguj" action="#{loginController.onLogin}" />
-    </h:form>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Hasło:</label>
+                    <h:inputSecret id="password" value="#{loginController.password}" required="true" styleClass="form-control" />
+                </div>
+
+                <h:commandButton value="Zaloguj" action="#{loginController.onLogin}" styleClass="btn w-100" style="background-color:#a5a8a6;"/>
+            </h:form>
+        </div>
+    </div>
 </h:body>
 </html>
