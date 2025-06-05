@@ -15,9 +15,10 @@ public class MessageSender {
     @Resource(lookup="java:app/jms/queue1")
     private Queue queue;
 
-    public void send(String messageText) {
+    public void send(String to, String subject, String body) {
         try (JMSContext context = connectionFactory.createContext()) {
-            context.createProducer().send(queue,messageText);
+            String messageText = to + "||" + subject + "||" + body;
+            context.createProducer().send(queue, messageText);
         }
     }
 }

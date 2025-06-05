@@ -3,8 +3,10 @@ package com.demo.controllers;
 import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
+import com.demo.services.MessageSender;
 import com.demo.services.NoticeService;
 import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
@@ -20,6 +22,9 @@ public class NoticeController implements Serializable {
 
     @Inject
     private NoticeService noticeService;
+
+    @EJB
+    private MessageSender messageSender;
 
     private Notice currentNotice;
     private List<Notice> notices;
