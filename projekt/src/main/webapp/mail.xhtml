@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>demo</title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+
+<h:body>
+    <ui:include src="/WEB-INF/include/navbar.xhtml" />
+    <h1>Send message</h1>
+    <h:form>
+        <p:panelGrid columns="3" styleClass="app-panelgrid-noborder">
+            <p:outputLabel for="@next" value="Enter message"/>
+            <p:inputText id="msg" value="#{message.message}" pt:placeholder="Enter text" required="true" />
+            <p:message for="msg"/>
+            <p:commandButton process="@form" value="Send (to server log)"
+                             action="#{message.onSend}"/>
+        </p:panelGrid>
+    </h:form>
+</h:body>
+
+</html>
