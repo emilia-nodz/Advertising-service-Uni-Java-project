@@ -64,3 +64,69 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
 - JaCoCo: 0.8.11
 
 ## Instrukcja użytkowania
+### 1. Sklonuj repozytorium:
+```bash
+git clone https://github.com/emilia-nodz/Advertising-service-Uni-Java-project.git
+```
+
+### 2. Rozpakuj i zbuduj projekt:
+```bash
+cd katalog-z-projektem
+mvn clean package
+```
+
+### 3. Pobierz:
+- [PostgreSQL](https://www.postgresql.org/download/)
+- [Payara6](https://www.payara.fish/downloads/payara-platform-community-edition/)
+
+### 4. Konfiguracja bazy danych PostgreSQL:
+- Uruchom bazę danych
+- Utwórz nową bazę: **Database → Create → Database**
+- Nadaj jej nazwę: **javaDB**
+- Następnie należy skopiować plik **postgresql-42.7.3.jar** (przykładowa ścieżka: *../.m2/repository/org/postgresql/postgresql/42.7.3*)
+- Należy go umieścić w folderze, gdzie znajduje się Payara: np. */payara6/glassfish/domains/domain-name/lib*
+
+### 5. Konfiguracja serwera aplikacyjnego Payara:
+- W terminalu przejdź do folderu zawierającego Payarę: *../payara6/bin*
+- Uruchom serwer aplikacyjny za pomocą:
+```bash
+asadmin start-domain domain-name
+```
+
+- Wejdź na stronę:
+```bash
+http://localhost:4848/ - panel administracyjny Payara
+```
+
+- Skonfiguruj **JDBC Connection Pool** (Zakładka Resources → JDBC → JDBC Connection Pools):
+Utwórz nowe źródło danych:
+```bash
+Pool Name: PostgresPool
+Resource Type: javax.sql.DataSource
+Datasource Connection: org.postgresql.ds.PGSimpleDataSource
+
+# W "Additional Properties" należy dodać:
+User - postgres
+URL - jdbc:postgresql://localhost:5432/javaDB
+Password - postgres
+DriverClass - org.postgresql.Driver
+# Uwaga! W przypadku User i Password należy podać odpowiednią nazwę i hasło konta, które zostało założone w bazie PostgreSQL!
+
+# Aby przetestować działanie należy kliknąć opcję 'Ping' i sprawdzić, czy pojawi się komunikat "Ping Succeeded"
+```
+
+- Skonfiguruj **JDBC Resources** (Zakładka Resources → JDBC → JDBC Resources):
+Utwórz nowy resource:
+```bash
+JNDI Name: jdbc/myPostgres
+Pool Name: PostgresPool
+```
+
+### 6. Wdrożenie aplikacji:
+- Utworzenie nowego deploymentu (Appliactions → Deploy → Wybierz plik .war → (opcjonalnie) Nadaj własną nawę projektu w Application Name → Kliknij OK)
+- Jeżeli wszystko przebiegło pomyślnie, przejdź do:
+```bash
+http://localhost:8080/nazwa-aplikacji
+```
+
+### 7. Po wejściu na stronę będziesz mieć dostęp do wszystkich zaimplementowanych funkcjonalności :)
