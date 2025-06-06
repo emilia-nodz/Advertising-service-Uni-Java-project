@@ -1,17 +1,20 @@
 
 package com.demo.controllers;
 
+import com.demo.bean.UserBean;
 import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
 import com.demo.services.NoticeService;
 import com.demo.services.UserService;
+import com.demo.util.JSF;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +33,10 @@ public class NoticeController implements Serializable {
     @Inject
     private UserService userService;
 
+    @Inject
+    private UserBean userBean; // Inject UserBean instead of session lookup
+
+
     private Notice currentNotice;
     private List<Notice> notices;
     private List<Notice> searchResults;
@@ -40,12 +47,6 @@ public class NoticeController implements Serializable {
     private User searchAuthor;
     private Category searchCategory;
 
-    // Automatically get logged-in user from session
-    private User getCurrentUser() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map<String, Object> sessionMap = context.getExternalContext().getSessionMap();
-        return (User) sessionMap.get("currentUser");
-    }
 
     @PostConstruct
     public void init() {
@@ -58,47 +59,45 @@ public class NoticeController implements Serializable {
         searchResults = null;
     }
 
-    public void prepareCreate() {
-        currentNotice = new Notice();
-        currentNotice.setPublishDate(new Date());
-    }
-
     public void prepareUpdate(Long id) {
         noticeService.findById(id).ifPresent(notice -> {
             currentNotice = notice;
         });
     }
-
     public void saveNotice() {
-        User currentUser = getCurrentUser();
-        if (currentUser == null) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", "Nie jesteś zalogowany!"));
+        if (userBean == null || !userBean.isLogged()) {
+            addFacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Not logged in");
             return;
         }
 
         try {
-            // Always use reference, regardless of notice ID
-            User managedUser = userService.getReferenceById(currentUser.getId());
-            currentNotice.setAuthor(managedUser);
+            // Use ID only - no need to fetch the user
+            User author = new User();
+            author.setId(userBean.getUser().getId()); // Just set the ID
 
+            currentNotice.setAuthor(author);
+            noticeService.save(currentNotice);
 
-            if (currentNotice.getId() == null) {
-                noticeService.save(currentNotice);
-            } else {
-                noticeService.update(currentNotice);
-            }
-
+            addFacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Notice saved successfully");
             prepareCreate();
             loadAllNotices();
 
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", e.getMessage()));
+            addFacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Save failed: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
+    // Change prepareCreate to not set author
+    public void prepareCreate() {
+        currentNotice = new Notice();
+        currentNotice.setPublishDate(new Date());
+    }
 
+    // Helper method for messages
+    private void addFacesMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+    }
 
     public void deleteNotice(Long id) {
         try {

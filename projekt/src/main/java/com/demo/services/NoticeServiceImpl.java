@@ -20,6 +20,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice save(Notice notice) {
+
         if (notice.getTitle() == null || notice.getTitle().isBlank()) {
             throw new IllegalArgumentException("Nazwa ogłoszenia jest wymagana");
         }

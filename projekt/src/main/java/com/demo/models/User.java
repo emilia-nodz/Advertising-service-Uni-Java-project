@@ -1,6 +1,8 @@
 package com.demo.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -30,6 +32,9 @@ public class User extends AbstractModel {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Notice> notices = new ArrayList<>();
 
     // Konstruktor domyślny (pusty, wymagany przez JPA):
     public User() {}
@@ -63,4 +68,12 @@ public class User extends AbstractModel {
 
     public UserRole getRole() { return role; }
     public void setRole(UserRole role) { this.role = role; }
+
+    public List<Notice> getNotices() {
+        return notices;
+    }
+
+    public void setNotices(List<Notice> notices) {
+        this.notices = notices;
+    }
 }

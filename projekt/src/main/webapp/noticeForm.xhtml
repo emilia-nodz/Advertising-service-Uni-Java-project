@@ -23,15 +23,15 @@
         <h:messages globalOnly="true" style="color: red;"/>
 
         <h:form id="noticeForm">
-            <!-- Author (display only) -->
+            <!-- Add this at the top of your form -->
+            <h:messages globalOnly="true" styleClass="error-message" showDetail="true"/>
+
             <div class="form-row">
                 <h:outputLabel value="Author"/>
                 <div class="read-only">
-                    <h:outputText value="#{noticeController.currentNotice.author.firstName}
-                                     #{noticeController.currentNotice.author.lastName}"/>
+                    <h:outputText value="#{userBean.user.name} #{userBean.user.surname}"/>
                 </div>
             </div>
-
             <!-- Title -->
             <div class="form-row">
                 <h:outputLabel for="title" value="Title *"/>
