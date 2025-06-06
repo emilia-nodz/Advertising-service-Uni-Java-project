@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7a42fd5-3ab8-403d-8091-c4ef0ff51242" name="Changes" comment="" />
+    <list default="true" id="e7a42fd5-3ab8-403d-8091-c4ef0ff51242" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/controllers/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/controllers/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/controllers/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/controllers/NoticeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/include/navbar.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/include/navbar.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/mail.xhtml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +54,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;adm&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;mail&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/wsosn/Desktop/studia/semestr6/java-projekt/projekt&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalResources&quot;
   }
