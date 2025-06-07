@@ -40,9 +40,6 @@ public class LoginController implements Serializable {
     @Inject
     private FacesContext facesContext;
 
-    @EJB
-    private MessageSender messageSender;
-
     @Inject @ManagedProperty("#{param.new}")
     private boolean isNew;
 
@@ -71,13 +68,6 @@ public class LoginController implements Serializable {
             if (userService.verify(login, password)) {
                 User user = userService.findByLogin(login);
                 userBean.setUser(user);
-
-                // TEST wysyłania maila po zalogowaniu
-                String email = user.getEmail();
-                String subject = "Logowanie zakończone sukcesem";
-                String body = "Witaj " + user.getName() + ", zalogowałeś się pomyślnie.";
-                messageSender.send(email, subject, body);
-
                 JSF.redirect("index.xhtml");
             } else {
                 JSF.addErrorMessage("Niepoprawna nazwa użytkownika lub hasło");
