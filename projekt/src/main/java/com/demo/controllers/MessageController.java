@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ViewScoped
 public class MessageController implements Serializable {
     @EJB
-    private MessageSender messageSender;
+    protected MessageSender messageSender;
 
     private String to; // Osoba, do której ma trafić wiadomość
     private String subject; // Temat

@@ -2,6 +2,7 @@ package com.demo;
 
 import com.demo.bean.UserBean;
 import com.demo.controllers.AdminController;
+import com.demo.models.Category;
 import com.demo.models.User;
 import com.demo.models.UserRole;
 import com.demo.services.UserService;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Collections;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -52,5 +55,15 @@ public class AdminControllerTest {
         boolean result = adminController.changeUserRole(1L, newRole);
         assertTrue(result);
         verify(userService).updateUserRole(1L, newRole);
+    }
+
+    @Test // Test sprawdzający, czy użytkownik zostanie poprawnie usunięty i nie będzie go na liście
+    void test_delete_user_and_refresh_users() {
+        User user = new User();
+        when(userService.findAll()).thenReturn(Collections.emptyList());
+        adminController.deleteU(user);
+        verify(userService).deleteUser(user);
+        verify(userService).findAll();
+        assertTrue(adminController.getAllUsers().isEmpty());
     }
 }

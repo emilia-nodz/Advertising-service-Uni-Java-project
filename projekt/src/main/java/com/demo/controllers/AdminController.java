@@ -78,4 +78,9 @@ public class AdminController implements Serializable {
             return false;
         }
     }
+
+    public void deleteU(User user) {
+        userService.deleteUser(user);
+        loadUsers();
+    }
 }
