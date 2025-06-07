@@ -11,4 +11,5 @@ public interface UserService {
     public boolean verify(String login, String password);
     public void save(User user);
     public void updateUserRole(Long userId, UserRole newRole);
+    public void deleteUser(User user);
 }

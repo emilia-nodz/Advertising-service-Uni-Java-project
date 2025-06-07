@@ -35,6 +35,10 @@ public class AdminController implements Serializable {
         allUsers = userService.findAll();
     }
 
+    public void loadUsers() {
+        allUsers = userService.findAll();
+    }
+
     public List<User> getAllUsers() {
         return allUsers;
     }
@@ -53,6 +57,12 @@ public class AdminController implements Serializable {
     public void updateUserRole(User user) {
         userService.updateUserRole(user.getId(), user.getRole());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Zmieniono rolę użytkownika", null));
+    }
+
+    public void deleteUser(User user) {
+        userService.deleteUser(user);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usunięto użytkownika", null));
+        loadUsers();
     }
 
     // Metody do testów: (ze względu na problemy z mockowaniem JSF/FacesContext)
