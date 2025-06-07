@@ -11,7 +11,7 @@
         <class>com.demo.models.Category</class>
 
          <properties>
-            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
              <property name="jakarta.persistence.jdbc.url"
                        value="jdbc:postgresql://localhost:5432/db"/>
