@@ -42,6 +42,7 @@
             <h:column>
                 <f:facet name="header">Akcja</f:facet>
                 <h:commandButton value="Zapisz" action="#{adminController.updateUserRole(u)}"/>
+                <h:commandButton value="Usuń" action="#{adminController.deleteUser(u)}" />
             </h:column>
         </h:dataTable>
     </h:form>

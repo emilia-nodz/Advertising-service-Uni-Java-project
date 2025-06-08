@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 
 @NamedQuery(name = "User.findByLogin",
         query = "SELECT u FROM User u WHERE u.username = :login")
+@NamedQuery(name = "User.findByEmail",
+        query = "SELECT u FROM User u WHERE u.email = :email")
 @NamedQuery(name = "User.findByRole",
         query = "SELECT u FROM User u WHERE u.role = :role")
 @Entity

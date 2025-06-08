@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email).orElse(null);
+    }
+
+    @Override
     public List<User> findAll() { return userDao.findAll(); }
 
     @Override
@@ -50,6 +55,11 @@ public class UserServiceImpl implements UserService {
             user.setPassword(hashed);
             userDao.save(user);
         }
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        userDao.delete(user.getId());
     }
 
     @Override

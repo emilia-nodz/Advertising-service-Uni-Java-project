@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7a42fd5-3ab8-403d-8091-c4ef0ff51242" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/EmailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/demo/MessageControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/controllers/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/controllers/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/controllers/MessageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/controllers/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/controllers/NoticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/services/MessageSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/include/navbar.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/include/navbar.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/mail.xhtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/demo/AdminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/demo/AdminControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

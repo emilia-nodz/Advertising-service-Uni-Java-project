@@ -40,7 +40,9 @@ public class UserDAOImpl extends AbstractDAOImpl<User> implements UserDAO {
         return findSingle("User.findByLogin","login",login);
     }
 
-    public User getReference(Long id) {
-        return em.getReference(User.class, id);
+    @Override
+    public Optional<User> findByEmail(String email) {
+        logger.debug("Wyszukiwanie użytkowników po emailu: {}", email);
+        return findSingle("User.findByEmail","email", email);
     }
 }

@@ -10,5 +10,5 @@ public interface UserDAO extends AbstractDAO<User> {
     User findByUsername(String username);
     List<User> findByRole(UserRole role);
     public Optional<User> findByLogin(String username);
-    User getReference(Long id);
+    public Optional<User> findByEmail(String email);
 }
