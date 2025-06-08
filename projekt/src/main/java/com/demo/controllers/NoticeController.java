@@ -1,10 +1,12 @@
 package com.demo.controllers;
 
+import com.demo.bean.UserBean;
 import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
 import com.demo.services.MessageSender;
 import com.demo.services.NoticeService;
+import com.demo.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
@@ -23,6 +25,15 @@ public class NoticeController implements Serializable {
     @Inject
     private NoticeService noticeService;
 
+    @Inject
+    private UserService userService;
+
+    @Inject
+    private UserBean userBean;
+
+    private Notice newNotice = new Notice();
+
+
     @EJB
     private MessageSender messageSender;
 
@@ -38,43 +49,41 @@ public class NoticeController implements Serializable {
 
     private Long selectedNoticeId;
 
-    @PostConstruct
-    public void init() {
-        loadAllNotices();
-        currentNotice = new Notice();
-    }
 
     public void loadAllNotices() {
         notices = noticeService.findAll();
         searchResults = null;
     }
 
-    public void prepareCreate() {
+    @PostConstruct
+    public void init() {
+        loadAllNotices();
+        newNotice = new Notice();
         currentNotice = new Notice();
-        currentNotice.setPublishDate(new Date());
     }
 
-    public void prepareUpdate(Long id) {
-        noticeService.findById(id).ifPresent(notice -> {
-            currentNotice = notice;
-        });
+    public Notice getNewNotice() {
+        return newNotice;
     }
 
-    public void saveNotice() {
+    public void setNewNotice(Notice newNotice) {
+        this.newNotice = newNotice;
+    }
+
+
+    public void addNotice() {
         try {
-            if (currentNotice.getId() == null) {
-                noticeService.save(currentNotice);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Poprawnie utworzono ogłoszenie"));
-            } else {
-                noticeService.update(currentNotice);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Poprawnie utworzono ogłoszenie"));
+            User loggedUser = userService.findByLogin(userBean.getUser().getUsername());
+            if (loggedUser == null) {
+                throw new IllegalStateException("Brak zalogowanego użytkownika");
             }
-            loadAllNotices();
-        } catch (IllegalArgumentException e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+            newNotice.setAuthor(loggedUser);
+            noticeService.save(newNotice);
+            notices = noticeService.findAll();
+            newNotice = new Notice();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano ogłoszenie."));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", e.getMessage()));
         }
     }
 

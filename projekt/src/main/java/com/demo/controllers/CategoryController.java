@@ -65,4 +65,5 @@ public class CategoryController implements Serializable {
         categoryService.delete(category);
         categories = categoryService.findAll();
     }
+
 }

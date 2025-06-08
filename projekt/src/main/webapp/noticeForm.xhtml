@@ -11,12 +11,16 @@
 <h:body>
 
     <h:form>
-        <h:inputText value="#{noticeController.currentNotice.title}"/>
-        <h:inputText value="#{noticeController.currentNotice.description}"/>
-        <h:inputText value="#{noticeController.currentNotice.amount}"/>
-        <h:inputText value="#{noticeController.currentNotice.category}"/>
 
-        <h:commandButton value="Save" action="#{noticeController.saveNotice}"/>
+        <h:inputText value="#{noticeController.newNotice.title}"/>
+        <h:inputText value="#{noticeController.newNotice.description}"/>
+        <h:inputText value="#{noticeController.newNotice.amount}"/>
+        <h:selectOneMenu value="#{noticeController.newNotice.category}" styleClass="form-select" converter="categoryConverter">
+            <f:selectItems value="#{categoryController.categories}" var="cat"
+                           itemLabel="#{cat.name}" itemValue="#{cat}"/>
+        </h:selectOneMenu>
+
+        <h:commandButton value="Save" action="#{noticeController.addNotice}"/>
     </h:form>
 
     <!-- Lista ogłoszeń -->
