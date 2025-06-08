@@ -8,6 +8,10 @@
     </ui:fragment>
 
     <div class="navbar">
+        <h:panelGroup>
+            <h:link value="Dodaj ogłoszenie" outcome="noticeForm.xhtml"/>
+        </h:panelGroup>
+
         <h:panelGroup rendered="#{userBean.logged}">
             <span>Witaj, #{userBean.username}</span>
 
