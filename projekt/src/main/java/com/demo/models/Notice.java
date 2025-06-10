@@ -3,6 +3,9 @@ import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import com.demo.models.User;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,7 +21,7 @@ public class Notice extends AbstractModel{
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date publishDate = new Date();
+    private Date publishDate;
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,9 +42,23 @@ public class Notice extends AbstractModel{
     @Column(nullable = false)
     private boolean wasModerated = false;
 
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date terminationDate;
+
+    private Date addDays(Date date, int days) {
+        Instant instant = date.toInstant();
+        return Date.from(instant.plus(days, ChronoUnit.DAYS));
+    }
+
     // Podczas tworzenia updateDate to null
     @PrePersist
     protected void onCreate() {
+        if (this.publishDate == null) {
+            this.publishDate = new Date();
+        }
+
+        this.terminationDate = addDays(this.publishDate, 2);
         this.updateDate = null;
     }
 
@@ -65,6 +82,7 @@ public class Notice extends AbstractModel{
         this.publishDate = new Date();
         this.wasModerated = false;
         this.updateDate = null;
+        this.terminationDate = addDays(this.publishDate, 2);
     }
 
     // Gettery i settery
@@ -130,5 +148,14 @@ public class Notice extends AbstractModel{
 
     public void setWasModerated(boolean wasModerated) {
         this.wasModerated = wasModerated;
+    }
+
+
+    public Date getTerminationDate() {
+        return this.terminationDate;
+    }
+
+    public void setTerminationDate(Date terminationDate) {
+        this.terminationDate = terminationDate;
     }
 }
