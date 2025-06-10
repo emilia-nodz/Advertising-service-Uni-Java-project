@@ -59,26 +59,5 @@
         </div>
     </div>
 
-    <!-- Lista ogłoszeń -->
-    <h:dataTable value="#{noticeController.notices}" var="notice">
-        <h:column>#{notice.title}</h:column>
-        <h:column>
-            <h:commandButton value="Edit" action="#{noticeController.prepareUpdate(notice.id)}"/>
-            <h:commandButton value="Delete" action="#{noticeController.deleteNotice(notice.id)}"/>
-        </h:column>
-    </h:dataTable>
-
-    <!-- TODO: formularz filtrowania -->
-    <h:form>
-        <h:inputText value="#{noticeController.searchTitle}"/>
-        <h:commandButton value="Search" action="#{noticeController.search}"/>
-        <h:commandButton value="Clear" action="#{noticeController.clearSearch}"/>
-    </h:form>
-
-    <!-- TODO: wyniki filtrowania -->
-    <h:dataTable value="#{noticeController.searchResults}" var="result" rendered="#{not empty noticeController.searchResults}">
-        <!-- TODO: wyświetlenie szczegółów -->
-    </h:dataTable>
-
 </h:body>
 </html>
