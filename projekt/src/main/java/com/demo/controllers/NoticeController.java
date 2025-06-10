@@ -41,16 +41,12 @@ public class NoticeController implements Serializable {
     private List<Notice> moderatedNotices;
     private List<Notice> searchResults;
 
-    // Search parameters
-    private String searchTitle;
-    private Date searchPublishedDate;
-    private User searchAuthor;
     private Category searchCategory;
 
     private Long selectedNoticeId;
 
     public void loadModeratedNotices() {
-        moderatedNotices = noticeService.findModerated();
+        this.moderatedNotices = noticeService.findModerated();
         searchResults = null;
     }
 
@@ -104,25 +100,15 @@ public class NoticeController implements Serializable {
     }
 
     public void search() {
-        if (searchTitle != null && !searchTitle.isEmpty()) {
-            searchResults = noticeService.findByTitle(searchTitle);
-        } else if (searchPublishedDate != null) {
-            searchResults = noticeService.findByPublishedDate(searchPublishedDate);
-        } else if (searchAuthor != null) {
-            searchResults = noticeService.findByAuthor(searchAuthor);
-        } else if (searchCategory != null) {
-            searchResults = noticeService.findByCategory(searchCategory);
-        } else {
-            searchResults = noticeService.findAll();
-        }
-    }
+        FacesContext context = FacesContext.getCurrentInstance();
 
-    public void clearSearch() {
-        searchTitle = null;
-        searchPublishedDate = null;
-        searchAuthor = null;
-        searchCategory = null;
-        searchResults = null;
+        if (searchCategory != null) {
+            moderatedNotices = noticeService.findByCategory(searchCategory);
+            context.addMessage(null, new FacesMessage("Found " + moderatedNotices.size() + " notices for " + searchCategory.getName()));
+        } else {
+            loadModeratedNotices();
+            context.addMessage(null, new FacesMessage("Loading all notices: " + moderatedNotices.size()));
+        }
     }
 
     // Getters and Setters
@@ -138,32 +124,12 @@ public class NoticeController implements Serializable {
         return notices;
     }
 
+    public List<Notice> getModeratedNotices() {
+        return moderatedNotices;
+    }
+
     public List<Notice> getSearchResults() {
         return searchResults;
-    }
-
-    public String getSearchTitle() {
-        return searchTitle;
-    }
-
-    public void setSearchTitle(String searchTitle) {
-        this.searchTitle = searchTitle;
-    }
-
-    public Date getSearchPublishedDate() {
-        return searchPublishedDate;
-    }
-
-    public void setSearchPublishedDate(Date searchPublishedDate) {
-        this.searchPublishedDate = searchPublishedDate;
-    }
-
-    public User getSearchAuthor() {
-        return searchAuthor;
-    }
-
-    public void setSearchAuthor(User searchAuthor) {
-        this.searchAuthor = searchAuthor;
     }
 
     public Category getSearchCategory() {
@@ -181,4 +147,5 @@ public class NoticeController implements Serializable {
     public void setSelectedNoticeId(Long selectedNoticeId) {
         this.selectedNoticeId = selectedNoticeId;
     }
+
 }
