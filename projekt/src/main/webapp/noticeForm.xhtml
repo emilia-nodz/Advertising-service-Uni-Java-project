@@ -15,34 +15,47 @@
         <div class="card p-4 shadow" style="min-width: 400px;">
             <h2 class="text-center mb-4">Dodaj ogłoszenie</h2>
 
-            <h:messages globalOnly="true" layout="table" styleClass="text-danger mb-3" />
-
-            <h:form>
-                <div class="mb-3">
-                    <label for="title" class="form-label">Tytuł ogłoszenia:</label>
-                    <h:inputText id="title" value="#{noticeController.newNotice.title}" required="true" styleClass="form-control"/>
+            <h:panelGroup rendered="#{not userBean.logged}">
+                <h4 class="text-danger mb-4">Aby dodać ogłoszenie musisz być zalogowany/a!</h4>
+                <div class="grid text-center">
+                    <h:link value="Zaloguj się" outcome="login.xhtml"
+                            styleClass="btn g-col-6 g-col-md-4 me-3"
+                            style="background-color:#a5a8a6;"/>
+                    <h:link value="Zarejestruj się" outcome="register.xhtml"
+                            styleClass="btn g-col-6 g-col-md-4 ms-3"
+                            style="background-color:#a5a8a6;"/>
                 </div>
+            </h:panelGroup>
 
-                <div class="mb-3">
-                    <label for="description" class="form-label">Opis ogłoszenia:</label>
-                    <h:inputText id="description" value="#{noticeController.newNotice.description}" required="true" styleClass="form-control"/>
-                </div>
+            <h:panelGroup rendered="#{userBean.logged}">
+                <h:messages globalOnly="true" layout="table" styleClass="text-danger mb-3" />
+                <h:form>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Tytuł ogłoszenia:</label>
+                        <h:inputText id="title" value="#{noticeController.newNotice.title}" required="true" styleClass="form-control"/>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="amount" class="form-label">Kwota (opcjonalnie):</label>
-                    <h:inputText id="amount" value="#{noticeController.newNotice.amount}" styleClass="form-control" />
-                </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Opis ogłoszenia:</label>
+                        <h:inputText id="description" value="#{noticeController.newNotice.description}" required="true" styleClass="form-control"/>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="category" class="form-label">Kategoria:</label>
-                    <h:selectOneMenu  id="category" class="form-select" value="#{noticeController.newNotice.category}" styleClass="form-select" converter="categoryConverter">
-                        <f:selectItems value="#{categoryController.categories}" var="cat"
-                                       itemLabel="#{cat.name}" itemValue="#{cat}"/>
-                    </h:selectOneMenu>
-                </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Kwota (opcjonalnie):</label>
+                        <h:inputText id="amount" value="#{noticeController.newNotice.amount}" styleClass="form-control" />
+                    </div>
 
-                <h:commandButton value="Dodaj" action="#{noticeController.addNotice}" styleClass="btn w-100" style="background-color:#a5a8a6;"/>
-            </h:form>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Kategoria:</label>
+                        <h:selectOneMenu  id="category" class="form-select" value="#{noticeController.newNotice.category}" styleClass="form-select" converter="categoryConverter">
+                            <f:selectItems value="#{categoryController.categories}" var="cat"
+                                           itemLabel="#{cat.name}" itemValue="#{cat}"/>
+                        </h:selectOneMenu>
+                    </div>
+
+                    <h:commandButton value="Dodaj" action="#{noticeController.addNotice}" styleClass="btn w-100" style="background-color:#a5a8a6;"/>
+                </h:form>
+            </h:panelGroup>
         </div>
     </div>
 

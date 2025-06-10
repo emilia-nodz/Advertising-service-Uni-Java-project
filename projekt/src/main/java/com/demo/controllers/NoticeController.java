@@ -62,6 +62,7 @@ public class NoticeController implements Serializable {
     @PostConstruct
     public void init() {
         loadAllNotices();
+        loadModeratedNotices();
         newNotice = new Notice();
         currentNotice = new Notice();
     }
