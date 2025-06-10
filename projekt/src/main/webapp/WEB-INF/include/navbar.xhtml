@@ -3,32 +3,58 @@
               xmlns:f="http://xmlns.jcp.org/jsf/core"
               xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:fragment>
-        <h:outputStylesheet library="css" name="navbar.css" />
-    </ui:fragment>
+    <h:outputStylesheet name="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="navbar">
-        <h:panelGroup rendered="#{userBean.logged}">
-            <h:panelGroup styleClass="left">
-                <h:link value="Witaj, #{userBean.username}" outcome="index.xhtml" />
-            </h:panelGroup>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <h:link value="Strona główna" outcome="index.xhtml" styleClass="nav-link"/>
+                </li>
+                <li class="nav-item">
+                    <h:link value="Dodaj ogłoszenie" outcome="noticeForm.xhtml" styleClass="nav-link"/>
+                </li>
+                <li class="nav-item">
+                    <h:link value="Lista ogłoszeń" outcome="noticeForm.xhtml" styleClass="nav-link"/>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <ui:fragment rendered="#{not userBean.logged}">
+                    <li class="nav-item">
+                        <h:link value="Zaloguj się" outcome="login.xhtml" styleClass="nav-link"/>
+                    </li>
+                    <li class="nav-item">
+                        <h:link value="Zarejestruj się" outcome="register.xhtml" styleClass="nav-link"/>
+                    </li>
+                </ui:fragment>
 
-            <h:panelGroup>
-                <h:link value="Dodaj ogłoszenie" outcome="noticeForm.xhtml"/>
-            </h:panelGroup>
-
-            <h:panelGroup rendered="#{userBean.admin}">
-                <h:link value="Panel administratora" outcome="admin.xhtml"/>
-            </h:panelGroup>
-
-            <h:form styleClass="right">
-                <h:commandButton value="Wyloguj się" action="#{loginController.onLogout}" />
-            </h:form>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{not userBean.logged}">
-            <h:link value="Zaloguj się" outcome="login.xhtml" />
-            <h:link value="Zarejestruj się" outcome="register.xhtml" style="margin-left:10px;" />
-        </h:panelGroup>
-    </div>
+                <ui:fragment rendered="#{userBean.logged}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle me-1" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                            Witaj, #{userBean.username}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <ui:fragment rendered="#{userBean.admin}">
+                                <li>
+                                    <h:link value="Panel administratora" outcome="admin.xhtml" styleClass="dropdown-item"/>
+                                </li>
+                            </ui:fragment>
+                            <li>
+                                <h:form styleClass="d-inline">
+                                    <h:commandButton value="Wyloguj się" action="#{loginController.onLogout}"
+                                                     styleClass="dropdown-item border-0 bg-transparent text-start w-100"/>
+                                </h:form>
+                            </li>
+                        </ul>
+                    </li>
+                </ui:fragment>
+            </ul>
+        </div>
+    </nav>
 </ui:component>
