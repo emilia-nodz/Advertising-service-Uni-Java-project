@@ -17,6 +17,7 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -38,6 +39,7 @@ public class NoticeController implements Serializable {
     private Notice selectedNotice;
     private List<Notice> notices;
     private List<Notice> moderatedNotices;
+    private List<Notice> notModeratedNotices;
     private List<Notice> searchResults;
 
     private Category searchCategory;
@@ -54,10 +56,15 @@ public class NoticeController implements Serializable {
         searchResults = null;
     }
 
+    public void loadNotModeratedNotices() {
+        notModeratedNotices = noticeService.findNotModerated();
+        searchResults = null;
+    }
+
     @PostConstruct
     public void init() {
-        loadAllNotices();
         loadModeratedNotices();
+        loadNotModeratedNotices();
     }
 
     public Notice getNewNotice() {
@@ -86,6 +93,7 @@ public class NoticeController implements Serializable {
 
     public void delete(Notice notice) {
         noticeService.delete(notice.getId());
+        loadNotModeratedNotices();
         loadModeratedNotices();
     }
 
@@ -132,6 +140,10 @@ public class NoticeController implements Serializable {
 
     public List<Notice> getModeratedNotices() {
         return moderatedNotices;
+    }
+
+    public List<Notice> getNotModeratedNotices() {
+        return notModeratedNotices;
     }
 
     public List<Notice> getSearchResults() {

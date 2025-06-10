@@ -13,5 +13,6 @@ public interface NoticeDAO extends AbstractDAO<Notice> {
     List<Notice> findByAuthor(User author);
     List<Notice> findByCategory(Category category);
     List<Notice> findModerated();
+    List<Notice> findNotModerated();
     List<Notice> findModeratedByCategory(Category category);
 }

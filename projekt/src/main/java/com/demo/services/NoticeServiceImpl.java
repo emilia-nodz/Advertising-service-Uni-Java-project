@@ -68,10 +68,17 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeDao.findAll();
     }
 
+    @Override
     public List<Notice> findModerated() {
         return noticeDao.findModerated();
     }
 
+    @Override
+    public List<Notice> findNotModerated() {
+        return noticeDao.findNotModerated();
+    }
+
+    @Override
     public List<Notice> findByTitle(String title) {
         return noticeDao.findByTitle(title);
     }
