@@ -68,10 +68,17 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeDao.findAll();
     }
 
+    @Override
     public List<Notice> findModerated() {
         return noticeDao.findModerated();
     }
 
+    @Override
+    public List<Notice> findNotModerated() {
+        return noticeDao.findNotModerated();
+    }
+
+    @Override
     public List<Notice> findByTitle(String title) {
         return noticeDao.findByTitle(title);
     }
@@ -89,5 +96,10 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public List<Notice> findByCategory(Category category) {
         return noticeDao.findByCategory(category);
+    }
+
+    @Override
+    public List<Notice> findModeratedByCategory(Category category) {
+        return noticeDao.findModeratedByCategory(category);
     }
 }

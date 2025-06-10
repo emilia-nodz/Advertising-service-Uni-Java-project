@@ -16,7 +16,7 @@
                     <h:link value="Dodaj ogłoszenie" outcome="noticeForm.xhtml" styleClass="nav-link"/>
                 </li>
                 <li class="nav-item">
-                    <h:link value="Lista ogłoszeń" outcome="noticeForm.xhtml" styleClass="nav-link"/>
+                    <h:link value="Lista ogłoszeń" outcome="noticeList.xhtml" styleClass="nav-link"/>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
@@ -45,6 +45,9 @@
                                     <h:link value="Panel administratora" outcome="admin.xhtml" styleClass="dropdown-item"/>
                                 </li>
                             </ui:fragment>
+                            <li>
+                                <h:link value="Twoje ogłoszenia" outcome="userNotices.xhtml" styleClass="dropdown-item"/>
+                            </li>
                             <li>
                                 <h:form styleClass="d-inline">
                                     <h:commandButton value="Wyloguj się" action="#{loginController.onLogout}"

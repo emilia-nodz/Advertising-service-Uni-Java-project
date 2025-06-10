@@ -14,14 +14,25 @@
     <div class="container mt-4">
         <h1 style="text-align:center;">Witamy w naszym serwisie ogłoszeń!</h1>
         <hr/>
+        <br/>
+
         <h2 style="text-align:center;">Ogłoszenia:</h2>
-        <ui:repeat value="#{noticeController.notices}" var="notice">
+        <br/>
+        <ui:repeat value="#{noticeController.moderatedNotices}" var="notice">
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">#{notice.title}</h5>
                     <p class="card-text">#{notice.description}</p>
                     <p class="card-text"><strong>Kategoria:</strong> #{notice.category.name}</p>
                     <p class="card-text"><strong>Kwota:</strong> #{notice.amount}</p>
+                    <ui:fragment rendered="#{notice.updateDate != null}">
+                        <p class="card-text">
+                            <strong>Data aktualizacji: </strong>
+                            <h:outputText value="#{notice.updateDate}">
+                                <f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="Europe/Warsaw" locale="pl_PL"/>
+                            </h:outputText>
+                        </p>
+                    </ui:fragment>
                 </div>
             </div>
         </ui:repeat>

@@ -17,6 +17,7 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -31,26 +32,22 @@ public class NoticeController implements Serializable {
     @Inject
     private UserBean userBean;
 
-    private Notice newNotice = new Notice();
-
     @EJB
     private MessageSender messageSender;
 
-    private Notice currentNotice;
+    private Notice newNotice = new Notice();
+    private Notice selectedNotice;
     private List<Notice> notices;
     private List<Notice> moderatedNotices;
+    private List<Notice> notModeratedNotices;
     private List<Notice> searchResults;
 
-    // Search parameters
-    private String searchTitle;
-    private Date searchPublishedDate;
-    private User searchAuthor;
     private Category searchCategory;
 
     private Long selectedNoticeId;
 
     public void loadModeratedNotices() {
-        moderatedNotices = noticeService.findModerated();
+        this.moderatedNotices = noticeService.findModerated();
         searchResults = null;
     }
 
@@ -59,11 +56,15 @@ public class NoticeController implements Serializable {
         searchResults = null;
     }
 
+    public void loadNotModeratedNotices() {
+        notModeratedNotices = noticeService.findNotModerated();
+        searchResults = null;
+    }
+
     @PostConstruct
     public void init() {
-        loadAllNotices();
-        newNotice = new Notice();
-        currentNotice = new Notice();
+        loadModeratedNotices();
+        loadNotModeratedNotices();
     }
 
     public Notice getNewNotice() {
@@ -90,79 +91,63 @@ public class NoticeController implements Serializable {
         }
     }
 
-    public void deleteNotice(Long id) {
-        try {
-            noticeService.delete(id);
-            loadAllNotices();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Ogłoszenie usunięto"));
-        } catch (IllegalArgumentException e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-        }
+    public void delete(Notice notice) {
+        noticeService.delete(notice.getId());
+        loadNotModeratedNotices();
+        loadModeratedNotices();
     }
 
     public void search() {
-        if (searchTitle != null && !searchTitle.isEmpty()) {
-            searchResults = noticeService.findByTitle(searchTitle);
-        } else if (searchPublishedDate != null) {
-            searchResults = noticeService.findByPublishedDate(searchPublishedDate);
-        } else if (searchAuthor != null) {
-            searchResults = noticeService.findByAuthor(searchAuthor);
-        } else if (searchCategory != null) {
-            searchResults = noticeService.findByCategory(searchCategory);
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (searchCategory != null) {
+            moderatedNotices = noticeService.findModeratedByCategory(searchCategory);
+            context.addMessage(null, new FacesMessage(
+                    "Znaleziono " + moderatedNotices.size() +
+                            " ogłoszeń w kategorii: " + searchCategory.getName()));
         } else {
-            searchResults = noticeService.findAll();
+            loadModeratedNotices();
+            context.addMessage(null, new FacesMessage(
+                    "Wyświetlam wszystkie ogłoszenia: " + moderatedNotices.size()));
         }
     }
 
-    public void clearSearch() {
-        searchTitle = null;
-        searchPublishedDate = null;
-        searchAuthor = null;
+    public void clearFilter() {
         searchCategory = null;
-        searchResults = null;
+        loadModeratedNotices();
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Filtry wyczyszczone. Wyświetlam wszystkie ogłoszenia."));
     }
 
-    // Getters and Setters
-    public Notice getCurrentNotice() {
-        return currentNotice;
+    public void update() {
+        if (selectedNotice != null) {
+            noticeService.update(selectedNotice);
+        }
     }
 
-    public void setCurrentNotice(Notice currentNotice) {
-        this.currentNotice = currentNotice;
+    // Gettery i Settery
+    public Notice getSelectedNotice() {
+        return selectedNotice;
+    }
+
+    public void setSelectedNotice(Notice selectedNotice) {
+        this.selectedNotice = selectedNotice;
     }
 
     public List<Notice> getNotices() {
         return notices;
     }
 
+    public List<Notice> getModeratedNotices() {
+        return moderatedNotices;
+    }
+
+    public List<Notice> getNotModeratedNotices() {
+        return notModeratedNotices;
+    }
+
     public List<Notice> getSearchResults() {
         return searchResults;
-    }
-
-    public String getSearchTitle() {
-        return searchTitle;
-    }
-
-    public void setSearchTitle(String searchTitle) {
-        this.searchTitle = searchTitle;
-    }
-
-    public Date getSearchPublishedDate() {
-        return searchPublishedDate;
-    }
-
-    public void setSearchPublishedDate(Date searchPublishedDate) {
-        this.searchPublishedDate = searchPublishedDate;
-    }
-
-    public User getSearchAuthor() {
-        return searchAuthor;
-    }
-
-    public void setSearchAuthor(User searchAuthor) {
-        this.searchAuthor = searchAuthor;
     }
 
     public Category getSearchCategory() {
@@ -180,4 +165,5 @@ public class NoticeController implements Serializable {
     public void setSelectedNoticeId(Long selectedNoticeId) {
         this.selectedNoticeId = selectedNoticeId;
     }
+
 }
