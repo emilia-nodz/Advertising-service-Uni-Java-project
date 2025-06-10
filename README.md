@@ -9,6 +9,7 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
 
 ## Autorzy i podział pracy
   - [emilia-nodz](https://github.com/emilia-nodz)
+    -  Zarządzanie ogłoszeniami
   - [wersosn](https://github.com/wersosn)
     -  Uwierzytelnianie
     -  Zarządzanie użytkownikami (zmiana roli)
@@ -130,3 +131,8 @@ http://localhost:8080/nazwa-aplikacji
 ```
 
 ### 7. Po wejściu na stronę będziesz mieć dostęp do wszystkich zaimplementowanych funkcjonalności :)
+
+### *8. Konfiguracja wysyłania maila:
+- Utwórz konto na platformie [Mailtrap](https://mailtrap.io/)
+- Sprawdź wygenerowane w Sandbox: Username, Password, Host oraz Port
+- Podmień potrzebne informacje w pliku EmailService.java
