@@ -55,7 +55,6 @@ public class NoticeServiceImpl implements NoticeService {
         if (notice.isEmpty()) {
             throw new IllegalArgumentException("Nie znalezniono ogłoszenia o id: " + id);
         }
-
         noticeDao.delete(id);
     }
 

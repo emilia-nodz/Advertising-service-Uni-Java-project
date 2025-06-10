@@ -10,12 +10,20 @@
 <h:body>
     <ui:include src="/WEB-INF/include/navbar.xhtml" />
 
-    <h1>Witamy na stronie!</h1>
-    <p>Tutaj pojawią się ogłoszenia c:</p>
-    <p>Twoja rola: #{userBean.user.role}</p>
-    <button class="btn btn-primary">Skibidi button testowy</button>
-
-
-
+    <div class="container mt-4">
+        <h1 style="text-align:center;">Witamy w naszym serwisie ogłoszeń!</h1>
+        <hr/>
+        <h2 style="text-align:center;">Ogłoszenia:</h2>
+        <ui:repeat value="#{noticeController.notices}" var="notice">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">#{notice.title}</h5>
+                    <p class="card-text">#{notice.description}</p>
+                    <p class="card-text"><strong>Kategoria:</strong> #{notice.category.name}</p>
+                    <p class="card-text"><strong>Kwota:</strong> #{notice.amount}</p>
+                </div>
+            </div>
+        </ui:repeat>
+    </div>
 </h:body>
 </html>

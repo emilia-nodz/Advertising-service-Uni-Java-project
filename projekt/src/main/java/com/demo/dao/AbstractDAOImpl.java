@@ -56,6 +56,7 @@ public class AbstractDAOImpl<T extends AbstractModel> implements AbstractDAO<T> 
         logger.debug("Usuwanie obiektu z id = {}", id);
         T t = em.getReference(type, id);
         em.remove(t);
+        em.flush();
     }
 
     @Override

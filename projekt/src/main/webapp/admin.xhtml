@@ -42,7 +42,7 @@
             <h:column>
                 <f:facet name="header">Akcja</f:facet>
                 <h:commandButton value="Zapisz" action="#{adminController.updateUserRole(u)}"/>
-                <h:commandButton value="Usuń" action="#{adminController.deleteUser(u)}" />
+                <h:commandButton value="Usuń" action="#{adminController.deleteUser(u)}" onclick="return confirm('Na pewno chcesz usunąć tego użytkownika?');"/>
             </h:column>
         </h:dataTable>
     </h:form>
@@ -76,7 +76,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Usuwanie</f:facet>
-                <h:commandButton value="Usuń" action="#{categoryController.deleteCategory(c)}" />
+                <h:commandButton value="Usuń" action="#{categoryController.deleteCategory(c)}" onclick="return confirm('Na pewno chcesz usunąć tę kategorię?');"/>
             </h:column>
         </h:dataTable>
     </h:form>

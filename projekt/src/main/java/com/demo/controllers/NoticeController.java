@@ -33,7 +33,6 @@ public class NoticeController implements Serializable {
 
     private Notice newNotice = new Notice();
 
-
     @EJB
     private MessageSender messageSender;
 
@@ -48,7 +47,6 @@ public class NoticeController implements Serializable {
     private Category searchCategory;
 
     private Long selectedNoticeId;
-
 
     public void loadAllNotices() {
         notices = noticeService.findAll();
@@ -69,7 +67,6 @@ public class NoticeController implements Serializable {
     public void setNewNotice(Notice newNotice) {
         this.newNotice = newNotice;
     }
-
 
     public void addNotice() {
         try {
