@@ -70,4 +70,13 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
                 .getResultList();
     }
 
+    @Override
+    public List<Notice> findModeratedByCategory(Category category) {
+        logger.debug("Szukanie ogłoszeń po moderacji w kategorii:  {}", category.getName());
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.wasModerated = true AND n.category = :category", Notice.class)
+                .setParameter("category", category)
+                .getResultList();
+    }
+
 }

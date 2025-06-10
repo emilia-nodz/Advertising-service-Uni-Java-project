@@ -31,11 +31,10 @@ public class NoticeController implements Serializable {
     @Inject
     private UserBean userBean;
 
-    private Notice newNotice = new Notice();
-
     @EJB
     private MessageSender messageSender;
 
+    private Notice newNotice = new Notice();
     private Notice currentNotice;
     private List<Notice> notices;
     private List<Notice> moderatedNotices;
@@ -59,8 +58,6 @@ public class NoticeController implements Serializable {
     public void init() {
         loadAllNotices();
         loadModeratedNotices();
-        newNotice = new Notice();
-        currentNotice = new Notice();
     }
 
     public Notice getNewNotice() {
@@ -103,12 +100,22 @@ public class NoticeController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
 
         if (searchCategory != null) {
-            moderatedNotices = noticeService.findByCategory(searchCategory);
-            context.addMessage(null, new FacesMessage("Found " + moderatedNotices.size() + " notices for " + searchCategory.getName()));
+            moderatedNotices = noticeService.findModeratedByCategory(searchCategory);
+            context.addMessage(null, new FacesMessage(
+                    "Znaleziono " + moderatedNotices.size() +
+                            " ogłoszeń w kategorii: " + searchCategory.getName()));
         } else {
             loadModeratedNotices();
-            context.addMessage(null, new FacesMessage("Loading all notices: " + moderatedNotices.size()));
+            context.addMessage(null, new FacesMessage(
+                    "Wyświetlam wszystkie ogłoszenia: " + moderatedNotices.size()));
         }
+    }
+
+    public void clearFilter() {
+        searchCategory = null;
+        loadModeratedNotices();
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Filtry wyczyszczone. Wyświetlam wszystkie ogłoszenia."));
     }
 
     // Getters and Setters

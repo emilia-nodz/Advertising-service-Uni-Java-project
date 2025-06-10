@@ -90,4 +90,9 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> findByCategory(Category category) {
         return noticeDao.findByCategory(category);
     }
+
+    @Override
+    public List<Notice> findModeratedByCategory(Category category) {
+        return noticeDao.findModeratedByCategory(category);
+    }
 }
