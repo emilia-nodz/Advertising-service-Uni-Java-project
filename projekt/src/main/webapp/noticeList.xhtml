@@ -36,21 +36,21 @@
         <h1>Lista ogłoszeń</h1>
         <br></br>
         <h:panelGroup id="noticeList">
-        <ui:repeat value="#{noticeController.moderatedNotices}" var="notice">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">#{notice.title}</h5>
-                    <p class="card-text">#{notice.description}</p>
-                    <p class="card-text"><strong>Kategoria:</strong> #{notice.category.name}</p>
-                    <p class="card-text"><strong>Kwota:</strong> #{notice.amount}</p>
-                    <ui:fragment rendered="#{notice.updateDate != null}">
-                        <p class="card-text">
-                            <strong>Data aktualizacji:</strong> #{notice.updateDate}
-                        </p>
-                    </ui:fragment>
+            <ui:repeat value="#{noticeController.moderatedNotices}" var="notice">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">#{notice.title}</h5>
+                        <p class="card-text">#{notice.description}</p>
+                        <p class="card-text"><strong>Kategoria:</strong> #{notice.category.name}</p>
+                        <p class="card-text"><strong>Kwota:</strong> #{notice.amount}</p>
+                        <ui:fragment rendered="#{notice.updateDate != null}">
+                            <p class="card-text">
+                                <strong>Data aktualizacji:</strong> #{notice.updateDate}
+                            </p>
+                        </ui:fragment>
+                    </div>
                 </div>
-            </div>
-        </ui:repeat>
+            </ui:repeat>
         </h:panelGroup>
     </div>
 </h:body>

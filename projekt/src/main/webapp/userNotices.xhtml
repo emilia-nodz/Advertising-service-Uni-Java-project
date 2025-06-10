@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      lang="pl">
+<h:head>
+    <title>Ogłoszenia użytkownika</title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <ui:include src="/WEB-INF/include/navbar.xhtml" />
+
+    <div class="container mt-4">
+        <h1 style="text-align:center;">Twoje ogłoszenia</h1>
+
+        <h3>Ogłoszenia oczekujące na potwierdzenie</h3>
+        <hr/>
+
+
+        <h3>Ogłoszenia potwierdzone</h3>
+        <hr/>
+        <h:form>
+            <h:dataTable value="#{noticeController.moderatedNotices}" var="modNot" styleClass="table table-striped table-bordered">
+                <h:column>
+                    <f:facet name="header">Tytuł</f:facet>
+                    <h:inputText value="#{modNot.title}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Opis</f:facet>
+                    <h:inputText value="#{modNot.description}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Kwota</f:facet>
+                    <h:inputText value="#{modNot.amount}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Kategoria</f:facet>
+                    <h:selectOneMenu id="category" class="form-select" value="#{modNot.category}" converter="categoryConverter">
+                        <f:selectItems value="#{categoryController.categories}" var="cat"
+                                       itemLabel="#{cat.name}" itemValue="#{cat}"/>
+                    </h:selectOneMenu>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Data wygaśnięcia</f:facet>
+                    <h:outputText value="#{modNot.terminationDate}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="Europe/Warsaw" locale="pl_PL"/>
+                </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Edycja</f:facet>
+                    <h:commandButton value="Zapisz" action="#{noticeController.update}">
+                        <f:setPropertyActionListener value="#{modNot}" target="#{noticeController.selectedNotice}" />
+                    </h:commandButton>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Usuwanie</f:facet>
+                    <h:commandButton value="Usuń" action="#{noticeController.delete(modNot.id)}" onclick="return confirm('Na pewno chcesz usunąć te ogłoszenie?');"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </div>
+</h:body>
+</html>
