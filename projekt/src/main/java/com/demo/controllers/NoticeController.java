@@ -111,7 +111,13 @@ public class NoticeController implements Serializable {
                 new FacesMessage("Filtry wyczyszczone. Wyświetlam wszystkie ogłoszenia."));
     }
 
-    // Getters and Setters
+    public void update() {
+        if (selectedNotice != null) {
+            noticeService.update(selectedNotice);
+        }
+    }
+
+    // Gettery i Settery
     public Notice getSelectedNotice() {
         return selectedNotice;
     }

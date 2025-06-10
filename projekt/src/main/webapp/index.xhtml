@@ -24,7 +24,10 @@
                     <p class="card-text"><strong>Kwota:</strong> #{notice.amount}</p>
                     <ui:fragment rendered="#{notice.updateDate != null}">
                         <p class="card-text">
-                            <strong>Data aktualizacji:</strong> #{notice.updateDate}
+                            <strong>Data aktualizacji: </strong>
+                            <h:outputText value="#{notice.updateDate}">
+                                <f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="Europe/Warsaw" locale="pl_PL"/>
+                            </h:outputText>
                         </p>
                     </ui:fragment>
                 </div>
