@@ -35,7 +35,7 @@ public class NoticeController implements Serializable {
     private MessageSender messageSender;
 
     private Notice newNotice = new Notice();
-    private Notice currentNotice;
+    private Notice selectedNotice;
     private List<Notice> notices;
     private List<Notice> moderatedNotices;
     private List<Notice> searchResults;
@@ -84,16 +84,9 @@ public class NoticeController implements Serializable {
         }
     }
 
-    public void deleteNotice(Long id) {
-        try {
-            noticeService.delete(id);
-            loadAllNotices();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Ogłoszenie usunięto"));
-        } catch (IllegalArgumentException e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
-        }
+    public void delete(Notice notice) {
+        noticeService.delete(notice.getId());
+        loadModeratedNotices();
     }
 
     public void search() {
@@ -119,12 +112,12 @@ public class NoticeController implements Serializable {
     }
 
     // Getters and Setters
-    public Notice getCurrentNotice() {
-        return currentNotice;
+    public Notice getSelectedNotice() {
+        return selectedNotice;
     }
 
-    public void setCurrentNotice(Notice currentNotice) {
-        this.currentNotice = currentNotice;
+    public void setSelectedNotice(Notice selectedNotice) {
+        this.selectedNotice = selectedNotice;
     }
 
     public List<Notice> getNotices() {
