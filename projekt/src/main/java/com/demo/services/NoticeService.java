@@ -18,4 +18,5 @@ public interface NoticeService {
     List<Notice> findByPublishedDate(Date publishedDate);
     List<Notice> findByAuthor(User author);
     List<Notice> findByCategory(Category category);
+    List<Notice> findModerated();
 }

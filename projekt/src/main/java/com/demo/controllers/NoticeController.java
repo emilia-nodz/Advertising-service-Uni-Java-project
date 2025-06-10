@@ -38,6 +38,7 @@ public class NoticeController implements Serializable {
 
     private Notice currentNotice;
     private List<Notice> notices;
+    private List<Notice> moderatedNotices;
     private List<Notice> searchResults;
 
     // Search parameters
@@ -47,6 +48,11 @@ public class NoticeController implements Serializable {
     private Category searchCategory;
 
     private Long selectedNoticeId;
+
+    public void loadModeratedNotices() {
+        moderatedNotices = noticeService.findModerated();
+        searchResults = null;
+    }
 
     public void loadAllNotices() {
         notices = noticeService.findAll();
