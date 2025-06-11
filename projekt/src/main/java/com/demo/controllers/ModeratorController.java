@@ -3,6 +3,7 @@ package com.demo.controllers;
 import com.demo.bean.UserBean;
 import com.demo.models.Notice;
 import com.demo.services.EmailService;
+import com.demo.services.MessageSender;
 import com.demo.services.NoticeService;
 import com.demo.util.JSF;
 import jakarta.annotation.PostConstruct;
@@ -24,7 +25,7 @@ public class ModeratorController implements Serializable {
     private NoticeService noticeService;
 
     @EJB
-    private EmailService emailService;
+    private MessageSender messageSender;
 
     @Inject
     private UserBean userBean;
@@ -65,7 +66,7 @@ public class ModeratorController implements Serializable {
             String recipient = notice.getAuthor().getEmail();
             String subject = "Twoje ogłoszenie zostało zaakceptowane";
             String content = "Ogłoszenie '" + notice.getTitle() + "' zostało zaakceptowane przez moderatora";
-            emailService.sendEmail(recipient, subject, content);
+            messageSender.send(recipient, subject, content);
         }
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Status weryfikacji zmieniony"));
@@ -80,7 +81,7 @@ public class ModeratorController implements Serializable {
 
         String subject = "Twoje ogłoszenie zostało odrzucone";
         String content = "Ogłoszenie '" + title + "' zostało odrzucone przez moderatora";
-        emailService.sendEmail(recipient, subject, content);
+        messageSender.send(recipient, subject, content);
 
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Ogłoszenie zostało odrzucone i usunięte"));
