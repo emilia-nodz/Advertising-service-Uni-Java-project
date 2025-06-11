@@ -2,7 +2,6 @@ package com.demo.controllers;
 
 import com.demo.bean.UserBean;
 import com.demo.models.Notice;
-import com.demo.services.EmailService;
 import com.demo.services.MessageSender;
 import com.demo.services.NoticeService;
 import com.demo.util.JSF;
