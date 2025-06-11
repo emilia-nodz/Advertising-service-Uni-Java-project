@@ -3,10 +3,12 @@ package com.demo;
 import com.demo.bean.UserBean;
 import com.demo.controllers.AdminController;
 import com.demo.controllers.NoticeController;
+import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
 import com.demo.services.NoticeService;
 import com.demo.services.UserService;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -101,6 +103,7 @@ public class NoticeControllerTest {
         assertEquals(testNotice, noticeController.getNewNotice());
     }
 
+    // Test sprawdzający czy ogłoszenie się usuwa i listy się aktualizują
     @Test
     void test_delete_notice() {
         Notice testNotice = new Notice();
@@ -124,5 +127,34 @@ public class NoticeControllerTest {
         assertEquals(unmoderatedList, noticeController.getNotModeratedNotices());
 
         verifyNoMoreInteractions(noticeService);
+    }
+
+    // Test sprawdzający czy wybrane ogłoszenie poprawnie się aktualizuje
+    @Test
+    void update_notice_when_selected() {
+        Notice mockNotice = new Notice(1L, "Notice", "Desc", 0, null, null);
+        noticeController.setSelectedNotice(mockNotice);
+
+        mockNotice.setTitle("Updated Title");
+        mockNotice.setDescription("Updated Description");
+        mockNotice.setAmount(5);
+
+        Notice expectedNotice = new Notice(1L, "Updated Title", "Updated Description", 5, null, null);
+
+        ArgumentCaptor<Notice> noticeCaptor = ArgumentCaptor.forClass(Notice.class);
+        when(noticeService.update(noticeCaptor.capture())).thenReturn(expectedNotice);
+
+        noticeController.update();
+
+        verify(noticeService).update(any(Notice.class));
+
+        Notice actualUpdatedNotice = noticeCaptor.getValue();
+
+        assertEquals(expectedNotice.getId(), actualUpdatedNotice.getId());
+        assertEquals(expectedNotice.getTitle(), actualUpdatedNotice.getTitle());
+        assertEquals(expectedNotice.getDescription(), actualUpdatedNotice.getDescription());
+        assertEquals(expectedNotice.getAmount(), actualUpdatedNotice.getAmount());
+
+        assertSame(mockNotice, noticeController.getSelectedNotice());
     }
 }

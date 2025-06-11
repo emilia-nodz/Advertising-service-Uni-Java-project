@@ -24,5 +24,6 @@ public interface NoticeService {
     List<Notice> findModeratedByUser(User user);
     List<Notice> findNotModeratedByUser(User user);
     void removeExpiredNotices();
+    void sendExpirationNotifications();
 
 }

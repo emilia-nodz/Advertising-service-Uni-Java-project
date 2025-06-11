@@ -40,7 +40,7 @@ public class NoticeController implements Serializable {
     @EJB
     private MessageSender messageSender;
 
-    private static final Logger logger = LogManager.getLogger(AbstractDAOImpl.class);
+    private static final Logger logger = LogManager.getLogger(NoticeController.class);
 
     private Notice newNotice = new Notice();
     private Notice selectedNotice;
