@@ -1,6 +1,7 @@
 package com.demo.controllers;
 
 import com.demo.bean.UserBean;
+import com.demo.dao.AbstractDAOImpl;
 import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
@@ -14,6 +15,9 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
@@ -35,6 +39,8 @@ public class NoticeController implements Serializable {
 
     @EJB
     private MessageSender messageSender;
+
+    private static final Logger logger = LogManager.getLogger(AbstractDAOImpl.class);
 
     private Notice newNotice = new Notice();
     private Notice selectedNotice;
@@ -109,9 +115,8 @@ public class NoticeController implements Serializable {
             notices = noticeService.findAll();
             newNotice = new Notice();
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano ogłoszenie."));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", e.getMessage()));
+            logger.error("Błąd podczas dodawania ogłoszenia: {}", e.getMessage());
         }
     }
 

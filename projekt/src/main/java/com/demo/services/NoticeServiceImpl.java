@@ -74,7 +74,7 @@ public class NoticeServiceImpl implements NoticeService {
         noticeDao.deleteByTerminationDate();
     }
 
-    @Schedule(hour = "8", minute = "0", persistent = true)
+    @Schedule(hour = "12", minute = "0", persistent = true)
     public void sendExpirationNotifications() {
         Date tomorrow = Date.from(LocalDate.now()
                 .plusDays(1)
