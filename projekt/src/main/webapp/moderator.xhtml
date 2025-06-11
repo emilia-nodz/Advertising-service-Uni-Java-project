@@ -14,53 +14,45 @@
     </f:metadata>
 
     <ui:include src="/WEB-INF/include/navbar.xhtml" />
+
     <div class="container mt-4">
         <h1 style="text-align:center;">Panel moderatora</h1>
 
-        <h3>Zarządzanie ogłoszeniami</h3>
+        <h3>Weryfikacja ogłoszeń</h3>
         <hr/>
         <h:form>
-            <h:dataTable value="#{moderatorController.allNotices}" var="notice" styleClass="table table-striped table-bordered">
+            <h:dataTable value="#{moderatorController.allNotices}" var="notice"
+                         styleClass="table table-striped table-bordered">
+
                 <h:column>
                     <f:facet name="header">ID</f:facet>
                     #{notice.id}
                 </h:column>
+
                 <h:column>
                     <f:facet name="header">Tytuł</f:facet>
                     #{notice.title}
                 </h:column>
-                <h:column>
-                    <f:facet name="header">Opis</f:facet>
-                    #{notice.description}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Kategoria</f:facet>
-                    #{notice.category.name}
-                </h:column>
+
                 <h:column>
                     <f:facet name="header">Autor</f:facet>
                     #{notice.author.username}
                 </h:column>
+
                 <h:column>
-                    <f:facet name="header">Data utworzenia</f:facet>
-                    #{notice.createdDate}
+                    <f:facet name="header">Status</f:facet>
+                    <h:outputText value="#{notice.wasModerated ? 'ZWERYFIKOWANE' : 'OCZEKUJĄCE'}"
+                                  styleClass="#{notice.wasModerated ? 'text-success' : 'text-warning'}"/>
                 </h:column>
-                <h:column>
-                    <f:facet name="header">Zmoderowane</f:facet>
-                    <h:selectBooleanCheckbox value="#{notice.moderated}" />
-                </h:column>
+
                 <h:column>
                     <f:facet name="header">Akcja</f:facet>
-                    <h:commandButton value="Zapisz" action="#{moderatorController.updateNotice(notice)}" styleClass="btn btn-primary me-2"/>
-                    <h:commandButton value="Usuń" action="#{moderatorController.deleteNotice(notice)}" styleClass="btn btn-danger" onclick="return confirm('Na pewno chcesz usunąć to ogłoszenie?');"/>
+                    <h:commandButton
+                            value="#{notice.wasModerated ? 'COFNIJ WERYFIKACJĘ' : 'ZWERYFIKUJ'}"
+                            action="#{moderatorController.toggleVerification(notice)}"
+                            styleClass="#{notice.wasModerated ? 'btn btn-warning' : 'btn btn-success'}"/>
                 </h:column>
             </h:dataTable>
-
-            <h:panelGroup rendered="#{empty moderatorController.allNotices}">
-                <div class="alert alert-info">
-                    Brak ogłoszeń w systemie.
-                </div>
-            </h:panelGroup>
         </h:form>
     </div>
 </h:body>

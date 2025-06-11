@@ -5,12 +5,12 @@ import com.demo.models.Notice;
 import com.demo.services.NoticeService;
 import com.demo.util.JSF;
 import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 @SessionScoped
 public class ModeratorController implements Serializable {
 
-    @Inject
+    @EJB
     private NoticeService noticeService;
 
     @Inject
@@ -29,11 +29,15 @@ public class ModeratorController implements Serializable {
 
     @PostConstruct
     public void init() {
-        loadAllNotices();
+        loadNotices();
     }
 
-    public void loadAllNotices() {
+    public void loadNotices() {
         allNotices = noticeService.findAll();
+    }
+
+    public List<Notice> getAllNotices() {
+        return allNotices;
     }
 
     public void checkAccess() throws IOException {
@@ -43,57 +47,12 @@ public class ModeratorController implements Serializable {
         }
     }
 
-    public void updateNotice(Notice notice) {
-        try {
-            noticeService.update(notice);
-            loadAllNotices();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Ogłoszenie zostało zaktualizowane", null));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd podczas aktualizacji ogłoszenia", e.getMessage()));
-        }
-    }
-
-    public void deleteNotice(Notice notice) {
-        try {
-            noticeService.delete(notice.getId());
-            loadAllNotices();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Ogłoszenie zostało usunięte", null));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd podczas usuwania ogłoszenia", e.getMessage()));
-        }
-    }
-
-    // Gettery
-    public List<Notice> getAllNotices() {
-        return allNotices;
-    }
-
-    // Metody do testów (ze względu na problemy z mockowaniem JSF/FacesContext)
-    public boolean isUserModerator() {
-        return userBean.getUser() != null && userBean.isModerator();
-    }
-
-    public boolean updateNoticeTest(Notice notice) {
-        try {
-            noticeService.update(notice);
-            loadAllNotices();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public boolean deleteNoticeTest(Notice notice) {
-        try {
-            noticeService.delete(notice.getId());
-            loadAllNotices();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void toggleVerification(Notice notice) {
+        notice.setWasModerated(!notice.getWasModerated());
+        noticeService.update(notice);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Zmieniono status weryfikacji",
+                        null));
     }
 }
