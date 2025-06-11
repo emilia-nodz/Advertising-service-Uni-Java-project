@@ -9,7 +9,8 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
 
 ## Autorzy i podział pracy
   - [emilia-nodz](https://github.com/emilia-nodz)
-    -  Zarządzanie ogłoszeniami
+    -  Zarządzanie ogłoszeniami (dodawanie, edycja, usuwanie)
+    -  Filtrowanie ogłoszeń po kategoriach
   - [wersosn](https://github.com/wersosn)
     -  Uwierzytelnianie
     -  Zarządzanie użytkownikami (zmiana roli)
@@ -24,7 +25,7 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
 - Przeglądanie publicznych ogłoszeń
 - Filtrowanie ogłoszeń po kategoriach
 - Dodawanie nowego ogłoszenia (trafiającego do akceptacji przez moderację)
-- Edycja własnych ogłoszeń (dopóki nie zostały zatwierdzone/przed publikacją)
+- Edycja własnych ogłoszeń
 - Usuwanie własnych ogłoszeń
 - Otrzymywanie maili:
   - o zaakceptowaniu i publikacji ogłoszenia;
@@ -35,7 +36,7 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
 - Zatwierdzanie i odrzucanie ogłoszeń
 
 *Administrator:*
-- Zarządzanie użytkownikami (np. nadawanie ról, blokowanie kont)
+- Zarządzanie użytkownikami (np. nadawanie ról)
 - Zarządzanie kategoriami (dodawanie, edycja, usuwanie)
 - Ustawianie parametrów systemowych (np. czas wygaśnięcia ogłoszeń, treść maili dotyczących powiadomień)
 
@@ -124,7 +125,7 @@ Pool Name: PostgresPool
 ```
 
 ### 6. Wdrożenie aplikacji:
-- Utworzenie nowego deploymentu (Appliactions → Deploy → Wybierz plik .war → (opcjonalnie) Nadaj własną nawę projektu w Application Name → Kliknij OK)
+- Utwórz nowy deployment (Appliactions → Deploy → Wybierz plik .war → (opcjonalnie) Nadaj własną nawę projektu w Application Name → Kliknij OK)
 - Jeżeli wszystko przebiegło pomyślnie, przejdź do:
 ```bash
 http://localhost:8080/nazwa-aplikacji
