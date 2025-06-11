@@ -51,4 +51,8 @@ public class UserBean implements Serializable {
     public String getUsername() {
         return user != null ? user.getUsername() : null;
     }
+
+       public boolean isModerator() {
+        return user != null && user.getRole() == UserRole.MODERATOR;
+    }
 }
