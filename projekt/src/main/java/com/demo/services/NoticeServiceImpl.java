@@ -6,7 +6,9 @@ import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
 import jakarta.ejb.EJB;
+import jakarta.ejb.Schedule;
 import jakarta.ejb.Stateless;
+import jakarta.transaction.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -56,6 +58,14 @@ public class NoticeServiceImpl implements NoticeService {
             throw new IllegalArgumentException("Nie znalezniono ogłoszenia o id: " + id);
         }
         noticeDao.delete(id);
+    }
+
+    // wykonuje się co godzinę
+    @Override
+    @Schedule(hour = "*", minute = "0")
+    @Transactional
+    public void removeExpiredNotices() {
+        noticeDao.deleteByTerminationDate();
     }
 
     @Override

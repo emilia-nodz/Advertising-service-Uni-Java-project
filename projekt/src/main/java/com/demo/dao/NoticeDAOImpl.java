@@ -105,5 +105,14 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
                 .getResultList();
     }
 
+    // usuwa wszystkie ogłoszenia, w których data wygaśnięcia już minęła
+    @Override
+    public void deleteByTerminationDate() {
+        Date now = new Date();
+        em.createQuery("DELETE FROM Notice n WHERE n.terminationDate < :now")
+                .setParameter("now", now)
+                .executeUpdate();
+    }
+
 
 }
