@@ -2,6 +2,7 @@ package com.demo.controllers;
 
 import com.demo.bean.UserBean;
 import com.demo.models.Notice;
+import com.demo.services.EmailService;
 import com.demo.services.NoticeService;
 import com.demo.util.JSF;
 import jakarta.annotation.PostConstruct;
@@ -22,11 +23,14 @@ public class ModeratorController implements Serializable {
     @EJB
     private NoticeService noticeService;
 
+    @EJB
+    private EmailService emailService;
+
     @Inject
     private UserBean userBean;
 
     private List<Notice> filteredNotices;
-    private String filterStatus = "all"; // "all", "verified", "unverified"
+    private String filterStatus = "all";
 
     @PostConstruct
     public void init() {
@@ -57,13 +61,27 @@ public class ModeratorController implements Serializable {
         notice.setWasModerated(!notice.getWasModerated());
         noticeService.update(notice);
         loadNotices();
+        if (notice.getWasModerated()) {
+            String recipient = notice.getAuthor().getEmail();
+            String subject = "Twoje ogłoszenie zostało zaakceptowane";
+            String content = "Ogłoszenie '" + notice.getTitle() + "' zostało zaakceptowane przez moderatora";
+            emailService.sendEmail(recipient, subject, content);
+        }
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Status weryfikacji zmieniony"));
     }
 
     public void rejectNotice(Notice notice) {
+        String recipient = notice.getAuthor().getEmail();
+        String title = notice.getTitle();
+
         noticeService.delete(notice.getId());
         loadNotices();
+
+        String subject = "Twoje ogłoszenie zostało odrzucone";
+        String content = "Ogłoszenie '" + title + "' zostało odrzucone przez moderatora";
+        emailService.sendEmail(recipient, subject, content);
+
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Ogłoszenie zostało odrzucone i usunięte"));
     }
