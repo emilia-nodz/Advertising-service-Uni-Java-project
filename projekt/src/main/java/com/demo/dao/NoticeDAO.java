@@ -18,4 +18,5 @@ public interface NoticeDAO extends AbstractDAO<Notice> {
     List<Notice> findModeratedByUser(User user);
     List<Notice> findNotModeratedByUser(User user);
     void deleteByTerminationDate();
+    List<Notice> findByTerminationDate(Date terminationDate);
 }

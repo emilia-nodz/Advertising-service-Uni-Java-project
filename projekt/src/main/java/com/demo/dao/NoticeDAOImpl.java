@@ -114,5 +114,20 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
                 .executeUpdate();
     }
 
+    @Override
+    public List<Notice> findByTerminationDate(Date terminationDate) {
+        LocalDate localDate = terminationDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
 
+        Date startOfDay = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date nextDay = Date.from(localDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.terminationDate >= :start AND n.terminationDate < :end",
+                        Notice.class)
+                .setParameter("start", startOfDay)
+                .setParameter("end", nextDay)
+                .getResultList();
+    }
 }
