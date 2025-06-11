@@ -87,4 +87,23 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
                 .getResultList();
     }
 
+    @Override
+    public List<Notice> findModeratedByUser(User user) {
+        logger.debug("Szukanie ogłoszeń po moderacji po użytkonwiku:  {}", user.getUsername());
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.wasModerated = true AND n.author = :user", Notice.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+    @Override
+    public List<Notice> findNotModeratedByUser(User user) {
+        logger.debug("Szukanie ogłoszeń niezmoderowanych po użytkonwiku:  {}", user.getUsername());
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.wasModerated = false AND n.author = :user", Notice.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+
 }

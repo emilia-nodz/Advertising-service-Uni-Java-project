@@ -15,6 +15,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,8 @@ public class NoticeController implements Serializable {
     private List<Notice> notices;
     private List<Notice> moderatedNotices;
     private List<Notice> notModeratedNotices;
+    private List<Notice> moderatedNoticesByUser;
+    private List<Notice> notModeratedNoticesByUser;
     private List<Notice> searchResults;
 
     private Category searchCategory;
@@ -61,10 +64,30 @@ public class NoticeController implements Serializable {
         searchResults = null;
     }
 
+    public void loadModeratedNoticesByUser() {
+        if (userBean.getUser() != null) {
+            User loggedUser = userService.findByLogin(userBean.getUser().getUsername());
+            this.moderatedNoticesByUser = noticeService.findModeratedByUser(loggedUser);
+        } else {
+            this.moderatedNoticesByUser = Collections.emptyList();
+        }
+    }
+
+    public void loadNotModeratedNoticesByUser() {
+        if (userBean.getUser() != null) {
+            User loggedUser = userService.findByLogin(userBean.getUser().getUsername());
+            this.notModeratedNoticesByUser = noticeService.findNotModeratedByUser(loggedUser);
+        } else {
+            this.notModeratedNoticesByUser = Collections.emptyList();
+        }
+    }
+
     @PostConstruct
     public void init() {
         loadModeratedNotices();
         loadNotModeratedNotices();
+        loadNotModeratedNoticesByUser();
+        loadModeratedNoticesByUser();
     }
 
     public Notice getNewNotice() {
@@ -144,6 +167,14 @@ public class NoticeController implements Serializable {
 
     public List<Notice> getNotModeratedNotices() {
         return notModeratedNotices;
+    }
+
+    public List<Notice> getModeratedNoticesByUser() {
+        return moderatedNoticesByUser;
+    }
+
+    public List<Notice> getNotModeratedNoticesByUser() {
+        return notModeratedNoticesByUser;
     }
 
     public List<Notice> getSearchResults() {

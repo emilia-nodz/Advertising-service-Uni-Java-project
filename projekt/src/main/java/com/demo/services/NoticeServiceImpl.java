@@ -102,4 +102,14 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> findModeratedByCategory(Category category) {
         return noticeDao.findModeratedByCategory(category);
     }
+
+    @Override
+    public List<Notice> findModeratedByUser(User user) {
+        return noticeDao.findModeratedByUser(user);
+    }
+
+    @Override
+    public List<Notice> findNotModeratedByUser(User user) {
+        return noticeDao.findNotModeratedByUser(user);
+    }
 }

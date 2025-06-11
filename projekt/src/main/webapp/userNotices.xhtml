@@ -18,7 +18,7 @@
         <h3>Ogłoszenia oczekujące na potwierdzenie</h3>
         <hr/>
         <h:form>
-            <h:dataTable value="#{noticeController.notModeratedNotices}" var="notMod" styleClass="table table-striped table-bordered">
+            <h:dataTable value="#{noticeController.notModeratedNoticesByUser}" var="notMod" styleClass="table table-striped table-bordered">
                 <h:column>
                     <f:facet name="header">Tytuł</f:facet>
                     <h:inputText value="#{notMod.title}" />
@@ -61,7 +61,7 @@
         <h3>Ogłoszenia potwierdzone</h3>
         <hr/>
         <h:form>
-            <h:dataTable value="#{noticeController.moderatedNotices}" var="modNot" styleClass="table table-striped table-bordered">
+            <h:dataTable value="#{noticeController.moderatedNoticesByUser}" var="modNot" styleClass="table table-striped table-bordered">
                 <h:column>
                     <f:facet name="header">Tytuł</f:facet>
                     <h:inputText value="#{modNot.title}" />
