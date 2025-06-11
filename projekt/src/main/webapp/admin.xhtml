@@ -50,7 +50,7 @@
     <h3>Zarządzanie kategoriami</h3>
     <hr/>
     <h:form>
-        <h3>Dodaj kategorię</h3>
+        <h4>Dodaj kategorię</h4>
         <div class="row mb-3">
             <div class="col-md-6">
                 <h:inputText id="name" value="#{categoryController.newCategory.name}" required="true" styleClass="form-control" />
@@ -62,7 +62,7 @@
     </h:form>
 
     <h:form>
-        <h3>Lista kategorii</h3>
+        <h4>Lista kategorii</h4>
         <h:dataTable value="#{categoryController.categories}" var="c" styleClass="table table-striped table-bordered">
             <h:column>
                 <f:facet name="header">Nazwa</f:facet>
