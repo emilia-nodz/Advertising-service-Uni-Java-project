@@ -6,9 +6,9 @@ import com.demo.services.NoticeService;
 import com.demo.util.JSF;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Named("moderatorController")
-@SessionScoped
+@ViewScoped
 public class ModeratorController implements Serializable {
 
     @EJB
@@ -25,7 +25,8 @@ public class ModeratorController implements Serializable {
     @Inject
     private UserBean userBean;
 
-    private List<Notice> allNotices;
+    private List<Notice> filteredNotices;
+    private String filterStatus = "all"; // "all", "verified", "unverified"
 
     @PostConstruct
     public void init() {
@@ -33,11 +34,16 @@ public class ModeratorController implements Serializable {
     }
 
     public void loadNotices() {
-        allNotices = noticeService.findAll();
-    }
-
-    public List<Notice> getAllNotices() {
-        return allNotices;
+        switch (filterStatus) {
+            case "verified":
+                filteredNotices = noticeService.findModerated();
+                break;
+            case "unverified":
+                filteredNotices = noticeService.findNotModerated();
+                break;
+            default:
+                filteredNotices = noticeService.findAll();
+        }
     }
 
     public void checkAccess() throws IOException {
@@ -50,9 +56,29 @@ public class ModeratorController implements Serializable {
     public void toggleVerification(Notice notice) {
         notice.setWasModerated(!notice.getWasModerated());
         noticeService.update(notice);
+        loadNotices();
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Zmieniono status weryfikacji",
-                        null));
+                new FacesMessage("Status weryfikacji zmieniony"));
+    }
+
+    public void rejectNotice(Notice notice) {
+        noticeService.delete(notice.getId());
+        loadNotices();
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Ogłoszenie zostało odrzucone i usunięte"));
+    }
+
+
+    public List<Notice> getFilteredNotices() {
+        return filteredNotices;
+    }
+
+    public String getFilterStatus() {
+        return filterStatus;
+    }
+
+    public void setFilterStatus(String filterStatus) {
+        this.filterStatus = filterStatus;
+        loadNotices();
     }
 }
