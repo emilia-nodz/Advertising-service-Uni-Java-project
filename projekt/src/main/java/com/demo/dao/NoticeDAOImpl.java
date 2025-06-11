@@ -89,7 +89,7 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
 
     @Override
     public List<Notice> findModeratedByUser(User user) {
-        logger.debug("Szukanie ogłoszeń po moderacji po użytkonwiku:  {}", user.getUsername());
+        logger.debug("Szukanie ogłoszeń po moderacji po użytkowniku:  {}", user.getUsername());
         return em.createQuery(
                         "SELECT n FROM Notice n WHERE n.wasModerated = true AND n.author = :user", Notice.class)
                 .setParameter("user", user)
@@ -98,7 +98,7 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
 
     @Override
     public List<Notice> findNotModeratedByUser(User user) {
-        logger.debug("Szukanie ogłoszeń niezmoderowanych po użytkonwiku:  {}", user.getUsername());
+        logger.debug("Szukanie ogłoszeń niezmoderowanych po użytkowniku:  {}", user.getUsername());
         return em.createQuery(
                         "SELECT n FROM Notice n WHERE n.wasModerated = false AND n.author = :user", Notice.class)
                 .setParameter("user", user)
@@ -108,6 +108,7 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
     // usuwa wszystkie ogłoszenia, w których data wygaśnięcia już minęła
     @Override
     public void deleteByTerminationDate() {
+        logger.debug("Usuwanie ogłoszeń po dacie wygaśnięcia");
         Date now = new Date();
         em.createQuery("DELETE FROM Notice n WHERE n.terminationDate < :now")
                 .setParameter("now", now)
@@ -116,6 +117,8 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
 
     @Override
     public List<Notice> findByTerminationDate(Date terminationDate) {
+        logger.debug("Szukanie ogłoszeń po dacie wygaśnięcia: {}", terminationDate);
+
         LocalDate localDate = terminationDate.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
