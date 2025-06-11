@@ -83,7 +83,6 @@ public class NoticeServiceImpl implements NoticeService {
 
         List<Notice> expiringNotices = noticeDao.findByTerminationDate(tomorrow);
 
-        // Create formatter with the same settings as the JSF converter
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         formatter.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
 
