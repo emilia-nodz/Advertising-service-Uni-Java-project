@@ -90,6 +90,7 @@ public class NoticeController implements Serializable {
 
     @PostConstruct
     public void init() {
+        logger.info("Inicjalizacja kontrolera");
         loadModeratedNotices();
         loadNotModeratedNotices();
         loadNotModeratedNoticesByUser();
@@ -137,15 +138,16 @@ public class NoticeController implements Serializable {
         } else {
             loadModeratedNotices();
             context.addMessage(null, new FacesMessage(
-                    "Wyświetlam wszystkie ogłoszenia: " + moderatedNotices.size()));
+                    "Wszystkie ogłoszenia: " + moderatedNotices.size()));
         }
     }
 
     public void clearFilter() {
+        logger.info("Czyszczenie filtra");
         searchCategory = null;
         loadModeratedNotices();
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Filtry wyczyszczone. Wyświetlam wszystkie ogłoszenia."));
+                new FacesMessage("Filtry wyczyszczone. Wszystkie ogłoszenia:"));
     }
 
     public void update() {

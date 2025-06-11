@@ -37,4 +37,6 @@ projekt/target/
 projekt/logs/
 logs/
 
+!projekt/logs/.gitkeep
+
 projekt/h2data.*

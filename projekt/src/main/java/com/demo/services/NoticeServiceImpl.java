@@ -2,6 +2,7 @@ package com.demo.services;
 
 
 import com.demo.dao.NoticeDAO;
+import com.demo.dao.NoticeDAOImpl;
 import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
@@ -9,6 +10,8 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Schedule;
 import jakarta.ejb.Stateless;
 import jakarta.transaction.Transactional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -20,6 +23,8 @@ import java.util.TimeZone;
 
 @Stateless
 public class NoticeServiceImpl implements NoticeService {
+    private static final Logger logger = LogManager.getLogger(NoticeServiceImpl.class);
+
     @EJB
     private NoticeDAO noticeDao;
 
@@ -28,13 +33,17 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice save(Notice notice) {
+        logger.info("Próba zapisu ogłoszenia o tytule: {}", notice.getTitle());
         if (notice.getTitle() == null || notice.getTitle().isBlank()) {
+            logger.error("Nazwa ogłoszenia jest wymagana");
             throw new IllegalArgumentException("Nazwa ogłoszenia jest wymagana");
         }
         if (notice.getAuthor() == null) {
+            logger.error("Autor ogłoszenia jest wymagany");
             throw new IllegalArgumentException("Autor ogłoszenia jest wymagany");
         }
         if (notice.getCategory() == null) {
+            logger.error("Kategoria ogłoszenia jest wymagana");
             throw new IllegalArgumentException("Kategoria ogłoszenia jest wymagana");
         }
 
@@ -46,8 +55,11 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice update(Notice notice) {
+        logger.info("Próba edycji ogłoszenia o tytule: {}", notice.getTitle());
+
         Optional<Notice> existing = noticeDao.findById(notice.getId());
         if (existing.isEmpty()) {
+            logger.error("Nie znaleziono ogłoszenia o id: {}", notice.getId());
             throw new IllegalArgumentException("Nie znalezniono ogłoszenia o id: " + notice.getId());
         }
 
@@ -59,8 +71,11 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public void delete(Long id) {
+        logger.info("Próba usunięcia ogłoszenia o id: {}", id);
+
         Optional<Notice> notice = noticeDao.findById(id);
         if (notice.isEmpty()) {
+            logger.error("Nie znaleziono ogłoszenia o id: {}", id);
             throw new IllegalArgumentException("Nie znalezniono ogłoszenia o id: " + id);
         }
         noticeDao.delete(id);
@@ -71,17 +86,22 @@ public class NoticeServiceImpl implements NoticeService {
     @Schedule(hour = "*", minute = "0")
     @Transactional
     public void removeExpiredNotices() {
+        logger.info("Rozpoczęcie usuwania wygasłych ogłoszeń");
         noticeDao.deleteByTerminationDate();
+        logger.info("Zakończenie usuwania wygasłych ogłoszeń");
     }
 
     @Schedule(hour = "12", minute = "0", persistent = true)
     public void sendExpirationNotifications() {
+        logger.info("Rozpoczęcie wysyłania maili o wygaśnięciu ogłoszeń");
+
         Date tomorrow = Date.from(LocalDate.now()
                 .plusDays(1)
                 .atStartOfDay(ZoneId.systemDefault())
                 .toInstant());
 
         List<Notice> expiringNotices = noticeDao.findByTerminationDate(tomorrow);
+        logger.info("Znaleziono {} ogłoszeń do usunięcia",  expiringNotices.size());
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         formatter.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
@@ -96,6 +116,7 @@ public class NoticeServiceImpl implements NoticeService {
 
             messageSender.send(author.getEmail(), subject, body);
         }
+        logger.info("Zakończenie wysyłania maili o wygaśnięciu ogłoszeń");
     }
 
     @Override
