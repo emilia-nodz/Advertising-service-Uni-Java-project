@@ -10,11 +10,13 @@ import jakarta.ejb.Schedule;
 import jakarta.ejb.Stateless;
 import jakarta.transaction.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Stateless
 public class NoticeServiceImpl implements NoticeService {
@@ -72,7 +74,7 @@ public class NoticeServiceImpl implements NoticeService {
         noticeDao.deleteByTerminationDate();
     }
 
-    @Schedule(hour = "8", minute = "0", persistent = false) 
+    @Schedule(hour = "8", minute = "0", persistent = false)
     public void sendExpirationNotifications() {
         Date tomorrow = Date.from(LocalDate.now()
                 .plusDays(1)
@@ -81,10 +83,17 @@ public class NoticeServiceImpl implements NoticeService {
 
         List<Notice> expiringNotices = noticeDao.findByTerminationDate(tomorrow);
 
+        // Create formatter with the same settings as the JSF converter
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
+
         for (Notice notice : expiringNotices) {
             User author = notice.getAuthor();
             String subject = "Twoje ogłoszenie wygasa jutro";
-            String body = "Ogłoszenie: " + notice.getTitle() + " wygaśnie " + notice.getTerminationDate();
+            String formattedDate = formatter.format(notice.getTerminationDate());
+
+            String body = "Ogłoszenie: " + notice.getTitle() +
+                    " wygaśnie " + formattedDate;
 
             messageSender.send(author.getEmail(), subject, body);
         }

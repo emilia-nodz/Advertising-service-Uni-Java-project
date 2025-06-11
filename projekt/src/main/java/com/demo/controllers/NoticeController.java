@@ -108,6 +108,7 @@ public class NoticeController implements Serializable {
             noticeService.save(newNotice);
             notices = noticeService.findAll();
             newNotice = new Notice();
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano ogłoszenie."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", e.getMessage()));
