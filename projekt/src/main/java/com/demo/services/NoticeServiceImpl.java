@@ -6,17 +6,25 @@ import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
 import jakarta.ejb.EJB;
+import jakarta.ejb.Schedule;
 import jakarta.ejb.Stateless;
+import jakarta.transaction.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Stateless
 public class NoticeServiceImpl implements NoticeService {
     @EJB
     private NoticeDAO noticeDao;
 
+    @EJB
+    private MessageSender messageSender;
 
     @Override
     public Notice save(Notice notice) {
@@ -56,6 +64,38 @@ public class NoticeServiceImpl implements NoticeService {
             throw new IllegalArgumentException("Nie znalezniono ogłoszenia o id: " + id);
         }
         noticeDao.delete(id);
+    }
+
+    // wykonuje się co godzinę
+    @Override
+    @Schedule(hour = "*", minute = "0")
+    @Transactional
+    public void removeExpiredNotices() {
+        noticeDao.deleteByTerminationDate();
+    }
+
+    @Schedule(hour = "8", minute = "0", persistent = true)
+    public void sendExpirationNotifications() {
+        Date tomorrow = Date.from(LocalDate.now()
+                .plusDays(1)
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant());
+
+        List<Notice> expiringNotices = noticeDao.findByTerminationDate(tomorrow);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        formatter.setTimeZone(TimeZone.getTimeZone("Europe/Warsaw"));
+
+        for (Notice notice : expiringNotices) {
+            User author = notice.getAuthor();
+            String subject = "Twoje ogłoszenie wygasa jutro";
+            String formattedDate = formatter.format(notice.getTerminationDate());
+
+            String body = "Ogłoszenie: " + notice.getTitle() +
+                    " wygaśnie " + formattedDate;
+
+            messageSender.send(author.getEmail(), subject, body);
+        }
     }
 
     @Override
