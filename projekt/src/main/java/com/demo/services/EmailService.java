@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 @ApplicationScoped
 public class EmailService {
     // Aby przetestować działanie użyłam Mailtrap, musicie poniżej wstawić username i password z tego co znajdziecie w Sandbox
-    private final String username = "7befe8541766a1";
-    private final String password = "4550d54ecb09c7";
+    private final String username = "7d52921ca36a73";
+    private final String password = "50eb317c37bdc0";
     private Logger logger = Logger.getLogger(MessageListener.class.getName());
 
     public void sendEmail(String to, String subject, String content) {

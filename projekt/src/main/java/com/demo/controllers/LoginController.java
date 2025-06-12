@@ -31,18 +31,6 @@ public class LoginController implements Serializable {
     @EJB
     private UserService userService;
 
-    @Inject
-    private SecurityContext securityContext;
-
-    @Inject
-    private ExternalContext externalContext;
-
-    @Inject
-    private FacesContext facesContext;
-
-    @Inject @ManagedProperty("#{param.new}")
-    private boolean isNew;
-
     private String login;
     private String password;
 
@@ -81,16 +69,6 @@ public class LoginController implements Serializable {
         userBean.setUser(null);
         JSF.invalidateSession();
         JSF.redirect("index.xhtml");
-    }
-
-    private AuthenticationStatus continueAuthentication() {
-        return securityContext.authenticate(
-                (HttpServletRequest) externalContext.getRequest(),
-                (HttpServletResponse) externalContext.getResponse(),
-                AuthenticationParameters.withParams()
-                        .newAuthentication(isNew).credential(
-                                new UsernamePasswordCredential(login, password))
-        );
     }
 
     // Metody do testów: (ze względu na problemy z mockowaniem JSF/FacesContext)
