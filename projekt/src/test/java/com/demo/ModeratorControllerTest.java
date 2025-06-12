@@ -70,4 +70,25 @@ class ModeratorControllerTest {
         logger.info("JUnit test: INFO log");
         logger.warn("JUnit test: WARN log");
     }
+
+     @Test
+    void testToggleVerification_ShouldUpdateNoticeAndSendEmail() {
+
+        Notice notice = new Notice();
+        notice.setId(1L);
+        notice.setWasModerated(false);
+        User author = new User();
+        author.setEmail("test@example.com");
+        notice.setAuthor(author);
+        notice.setTitle("Test Notice");
+
+
+        moderatorController.toggleVerification(notice);
+
+
+        assertTrue(notice.getWasModerated());
+        verify(noticeService).update(notice);
+        verify(messageSender).send(eq("test@example.com"), anyString(), anyString());
+    }
+    
 }
