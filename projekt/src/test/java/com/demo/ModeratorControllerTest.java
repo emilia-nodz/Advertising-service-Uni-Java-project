@@ -2,6 +2,7 @@ package com.demo;
 
 import com.demo.controllers.ModeratorController;
 import com.demo.models.Notice;
+import com.demo.models.User;
 import com.demo.services.NoticeService;
 import com.demo.bean.UserBean;
 import com.demo.services.MessageSender;
