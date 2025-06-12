@@ -1,6 +1,7 @@
 package com.demo.controllers;
 
 import com.demo.bean.UserBean;
+import com.demo.dao.AbstractDAOImpl;
 import com.demo.models.Category;
 import com.demo.models.Notice;
 import com.demo.models.User;
@@ -14,7 +15,11 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,11 +40,15 @@ public class NoticeController implements Serializable {
     @EJB
     private MessageSender messageSender;
 
+    private static final Logger logger = LogManager.getLogger(NoticeController.class);
+
     private Notice newNotice = new Notice();
     private Notice selectedNotice;
     private List<Notice> notices;
     private List<Notice> moderatedNotices;
     private List<Notice> notModeratedNotices;
+    private List<Notice> moderatedNoticesByUser;
+    private List<Notice> notModeratedNoticesByUser;
     private List<Notice> searchResults;
 
     private Category searchCategory;
@@ -61,10 +70,31 @@ public class NoticeController implements Serializable {
         searchResults = null;
     }
 
+    public void loadModeratedNoticesByUser() {
+        if (userBean.getUser() != null) {
+            User loggedUser = userService.findByLogin(userBean.getUser().getUsername());
+            this.moderatedNoticesByUser = noticeService.findModeratedByUser(loggedUser);
+        } else {
+            this.moderatedNoticesByUser = Collections.emptyList();
+        }
+    }
+
+    public void loadNotModeratedNoticesByUser() {
+        if (userBean.getUser() != null) {
+            User loggedUser = userService.findByLogin(userBean.getUser().getUsername());
+            this.notModeratedNoticesByUser = noticeService.findNotModeratedByUser(loggedUser);
+        } else {
+            this.notModeratedNoticesByUser = Collections.emptyList();
+        }
+    }
+
     @PostConstruct
     public void init() {
+        logger.info("Inicjalizacja kontrolera");
         loadModeratedNotices();
         loadNotModeratedNotices();
+        loadNotModeratedNoticesByUser();
+        loadModeratedNoticesByUser();
     }
 
     public Notice getNewNotice() {
@@ -85,9 +115,9 @@ public class NoticeController implements Serializable {
             noticeService.save(newNotice);
             notices = noticeService.findAll();
             newNotice = new Notice();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dodano ogłoszenie."));
+
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", e.getMessage()));
+            logger.error("Błąd podczas dodawania ogłoszenia: {}", e.getMessage());
         }
     }
 
@@ -108,15 +138,16 @@ public class NoticeController implements Serializable {
         } else {
             loadModeratedNotices();
             context.addMessage(null, new FacesMessage(
-                    "Wyświetlam wszystkie ogłoszenia: " + moderatedNotices.size()));
+                    "Wszystkie ogłoszenia: " + moderatedNotices.size()));
         }
     }
 
     public void clearFilter() {
+        logger.info("Czyszczenie filtra");
         searchCategory = null;
         loadModeratedNotices();
         FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage("Filtry wyczyszczone. Wyświetlam wszystkie ogłoszenia."));
+                new FacesMessage("Filtry wyczyszczone. Wszystkie ogłoszenia:"));
     }
 
     public void update() {
@@ -144,6 +175,14 @@ public class NoticeController implements Serializable {
 
     public List<Notice> getNotModeratedNotices() {
         return notModeratedNotices;
+    }
+
+    public List<Notice> getModeratedNoticesByUser() {
+        return moderatedNoticesByUser;
+    }
+
+    public List<Notice> getNotModeratedNoticesByUser() {
+        return notModeratedNoticesByUser;
     }
 
     public List<Notice> getSearchResults() {

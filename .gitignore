@@ -38,4 +38,6 @@ projekt/logs/
 /logs/*
 !/logs/.gitkeep
 
+!projekt/logs/.gitkeep
+
 projekt/h2data.*

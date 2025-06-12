@@ -87,4 +87,50 @@ public class NoticeDAOImpl extends AbstractDAOImpl<Notice> implements NoticeDAO{
                 .getResultList();
     }
 
+    @Override
+    public List<Notice> findModeratedByUser(User user) {
+        logger.debug("Szukanie ogłoszeń po moderacji po użytkowniku:  {}", user.getUsername());
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.wasModerated = true AND n.author = :user", Notice.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+    @Override
+    public List<Notice> findNotModeratedByUser(User user) {
+        logger.debug("Szukanie ogłoszeń niezmoderowanych po użytkowniku:  {}", user.getUsername());
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.wasModerated = false AND n.author = :user", Notice.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+    // usuwa wszystkie ogłoszenia, w których data wygaśnięcia już minęła
+    @Override
+    public void deleteByTerminationDate() {
+        logger.debug("Usuwanie ogłoszeń po dacie wygaśnięcia");
+        Date now = new Date();
+        em.createQuery("DELETE FROM Notice n WHERE n.terminationDate < :now")
+                .setParameter("now", now)
+                .executeUpdate();
+    }
+
+    @Override
+    public List<Notice> findByTerminationDate(Date terminationDate) {
+        logger.debug("Szukanie ogłoszeń po dacie wygaśnięcia: {}", terminationDate);
+
+        LocalDate localDate = terminationDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        Date startOfDay = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date nextDay = Date.from(localDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        return em.createQuery(
+                        "SELECT n FROM Notice n WHERE n.terminationDate >= :start AND n.terminationDate < :end",
+                        Notice.class)
+                .setParameter("start", startOfDay)
+                .setParameter("end", nextDay)
+                .getResultList();
+    }
 }

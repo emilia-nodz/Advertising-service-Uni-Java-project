@@ -2,7 +2,6 @@ package com.demo;
 
 import com.demo.bean.UserBean;
 import com.demo.controllers.AdminController;
-import com.demo.models.Category;
 import com.demo.models.User;
 import com.demo.models.UserRole;
 import com.demo.services.UserService;

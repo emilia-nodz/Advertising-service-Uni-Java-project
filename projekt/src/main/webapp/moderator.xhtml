@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      lang="pl">
+<h:head>
+    <title>Panel moderatora</title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <style>
+        .status-verified { color: green; }
+        .status-unverified { color: orange; }
+        .btn-action { margin-right: 5px; }
+    </style>
+</h:head>
+<h:body>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{moderatorController.checkAccess}" />
+    </f:metadata>
+
+    <ui:include src="/WEB-INF/include/navbar.xhtml" />
+
+    <div class="container mt-4">
+        <h1 style="text-align:center;">Panel moderatora</h1>
+
+        <h3>Weryfikacja ogłoszeń</h3>
+
+
+        <h:form>
+            <div class="mb-3">
+                <h:selectOneRadio value="#{moderatorController.filterStatus}"
+                                  layout="pageDirection"
+                                  styleClass="form-check-input"
+                                  valueChangeListener="#{moderatorController.loadNotices}"
+                                  onchange="this.form.submit()">
+                    <f:selectItem itemValue="all" itemLabel="Wszystkie ogłoszenia" />
+                    <f:selectItem itemValue="verified" itemLabel="Tylko zweryfikowane" />
+                    <f:selectItem itemValue="unverified" itemLabel="Tylko niezweryfikowane" />
+                </h:selectOneRadio>
+            </div>
+        </h:form>
+
+        <hr/>
+
+
+        <h:form>
+            <h:dataTable value="#{moderatorController.filteredNotices}" var="notice"
+                         styleClass="table table-striped"
+                         rendered="#{not empty moderatorController.filteredNotices}">
+
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{notice.id}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Tytuł</f:facet>
+                    #{notice.title}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Autor</f:facet>
+                    #{notice.author.username}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Kategoria</f:facet>
+                    #{notice.category.name}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Status</f:facet>
+                    <h:outputText value="#{notice.wasModerated ? 'Zweryfikowane' : 'Oczekujące'}"
+                                  styleClass="#{notice.wasModerated ? 'status-verified' : 'status-unverified'}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Akcje</f:facet>
+                    <div>
+
+                        <h:commandButton value="Cofnij weryfikację"
+                                         action="#{moderatorController.toggleVerification(notice)}"
+                                         styleClass="btn btn-warning btn-action"
+                                         rendered="#{notice.wasModerated}"/>
+
+
+                        <h:commandButton value="Akceptuj"
+                                         action="#{moderatorController.toggleVerification(notice)}"
+                                         styleClass="btn btn-success btn-action"
+                                         rendered="#{not notice.wasModerated}"/>
+
+                        <h:commandButton value="Odrzuć"
+                                         action="#{moderatorController.rejectNotice(notice)}"
+                                         styleClass="btn btn-danger btn-action"
+                                         rendered="#{not notice.wasModerated}"
+                                         onclick="return confirm('Na pewno chcesz odrzucić to ogłoszenie?')"/>
+                    </div>
+                </h:column>
+            </h:dataTable>
+
+
+            <h:outputText value="Brak ogłoszeń do wyświetlenia"
+                          rendered="#{empty moderatorController.filteredNotices}"
+                          styleClass="alert alert-info"/>
+        </h:form>
+    </div>
+</h:body>
+</html>
