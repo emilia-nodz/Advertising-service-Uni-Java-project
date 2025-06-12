@@ -5,6 +5,8 @@ import com.demo.controllers.RegisterController;
 import com.demo.models.User;
 import com.demo.models.UserRole;
 import com.demo.services.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -17,6 +19,8 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 public class RegisterControllerTest {
+    private static final Logger logger = LogManager.getLogger(RegisterControllerTest.class);
+
     @InjectMocks
     private RegisterController registerController;
 
@@ -51,5 +55,6 @@ public class RegisterControllerTest {
         assertEquals(name, savedUser.getName());
         assertEquals(surname, savedUser.getSurname());
         assertEquals(UserRole.USER, savedUser.getRole());
+        logger.info("Użytkownik zarejestrował się poprawnie");
     }
 }

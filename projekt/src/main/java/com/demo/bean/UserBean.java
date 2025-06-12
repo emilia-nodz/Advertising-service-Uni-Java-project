@@ -48,6 +48,10 @@ public class UserBean implements Serializable {
         return user != null && user.getRole() == UserRole.ADMIN;
     }
 
+    public boolean isModerator() {
+        return user != null && user.getRole() == UserRole.MODERATOR;
+    }
+
     public String getUsername() {
         return user != null ? user.getUsername() : null;
     }

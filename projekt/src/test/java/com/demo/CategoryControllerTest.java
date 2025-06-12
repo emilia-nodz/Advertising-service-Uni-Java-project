@@ -2,6 +2,8 @@ package com.demo;
 import com.demo.controllers.CategoryController;
 import com.demo.models.Category;
 import com.demo.services.CategoryService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
@@ -16,6 +18,8 @@ import static org.mockito.Mockito.when;
 
 
 public class CategoryControllerTest {
+    private static final Logger logger = LogManager.getLogger(CategoryControllerTest.class);
+
     @InjectMocks
     private CategoryController controller;
 
@@ -34,6 +38,7 @@ public class CategoryControllerTest {
         controller.init();
         assertEquals(2, controller.getCategories().size());
         verify(categoryService).findAll();
+        logger.info("Kategorie zostały poprawnie załadowane");
     }
 
     @Test // Test sprawdzający czy nowa kategoria zostanie dodana poprawnie
@@ -46,6 +51,7 @@ public class CategoryControllerTest {
         verify(categoryService).findAll();
         assertNotNull(controller.getNewCategory());
         assertNotEquals("Sprzęt sportowy", controller.getNewCategory().getName());
+        logger.info("Poprawne dodanie kategorii");
     }
 
     @Test // Test sprawdzający, czy nazwa kategorii zostanie poprawnie zaktualizowana
@@ -55,6 +61,7 @@ public class CategoryControllerTest {
         category.setName("Akcesoria ogrodowe");
         controller.updateCategory();
         verify(categoryService).save(category);
+        logger.info("Poprawna aktualizacja kategorii");
     }
 
     @Test // Test sprawdzający, czy kategoria zostanie poprawnie usunięta i nie będzie jej na liście
@@ -65,5 +72,6 @@ public class CategoryControllerTest {
         verify(categoryService).delete(category);
         verify(categoryService).findAll();
         assertTrue(controller.getCategories().isEmpty());
+        logger.info("Poprawne usunięcie kategorii");
     }
 }

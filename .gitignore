@@ -35,6 +35,7 @@ projekt/target/
 
 ### logs folders ###
 projekt/logs/
-logs/
+/logs/*
+!/logs/.gitkeep
 
 projekt/h2data.*

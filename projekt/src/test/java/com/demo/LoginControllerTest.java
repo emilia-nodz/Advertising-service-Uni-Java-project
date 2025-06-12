@@ -3,6 +3,8 @@ package com.demo;
 import com.demo.bean.UserBean;
 import com.demo.controllers.LoginController;
 import com.demo.services.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,6 +17,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class LoginControllerTest {
+    private static final Logger logger = LogManager.getLogger(LoginControllerTest.class);
+
     @InjectMocks
     private LoginController loginController;
 
@@ -34,6 +38,7 @@ public class LoginControllerTest {
         when(userService.verify("user", "pass")).thenReturn(true);
         boolean result = loginController.authenticate("user", "pass");
         assertTrue(result);
+        logger.info("Użytkownik zalogował się poprawnie");
     }
 
     @Test // Test sprawdzający logowanie z niepoprawnymi danymi
@@ -41,11 +46,13 @@ public class LoginControllerTest {
         when(userService.verify("user", "wrong")).thenReturn(false);
         boolean result = loginController.authenticate("user", "wrong");
         assertFalse(result);
+        logger.info("Nieprawidłowe dane podczas logowania");
     }
 
     @Test // Test sprawdzający wylogowywanie użytkownika
     void test_logout() {
         loginController.logoutUser();
         verify(userBean).setUser(null);
+        logger.info("Użytkownik został poprawnie wylogowany");
     }
 }

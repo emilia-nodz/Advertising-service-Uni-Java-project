@@ -2,6 +2,8 @@ package com.demo;
 
 import com.demo.controllers.MessageController;
 import com.demo.services.MessageSender;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,6 +13,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class MessageControllerTest {
+    private static final Logger logger = LogManager.getLogger(MessageControllerTest.class);
     private MessageController messageController;
     private MessageSender mockSender;
 
@@ -35,5 +38,6 @@ public class MessageControllerTest {
         messageController.setBody(body);
         messageController.onSend();
         verify(mockSender, times(1)).send(to, subject, body);
+        logger.info("Wiadomość testowa została poprawnie wysłana");
     }
 }

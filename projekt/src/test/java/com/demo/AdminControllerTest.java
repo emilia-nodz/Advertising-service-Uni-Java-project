@@ -6,6 +6,8 @@ import com.demo.models.Category;
 import com.demo.models.User;
 import com.demo.models.UserRole;
 import com.demo.services.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,6 +22,8 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 public class AdminControllerTest {
+    private static final Logger logger = LogManager.getLogger(AdminControllerTest.class);
+
     @InjectMocks
     private AdminController adminController;
 
@@ -41,12 +45,14 @@ public class AdminControllerTest {
         when(userBean.getUser()).thenReturn(admin);
         when(userBean.isAdmin()).thenReturn(true);
         assertTrue(adminController.isUserAdmin());
+        logger.info("Użytkownik jest adminem");
     }
 
     @Test // Test, gdy użytkownik jest null
     void test_is_admin_user_false() {
         when(userBean.getUser()).thenReturn(null);
         assertFalse(adminController.isUserAdmin());
+        logger.info("Użytkownik nie jest adminem");
     }
 
     @Test // Test sprawdzający, czy zmiana roli powiodła się
@@ -55,6 +61,7 @@ public class AdminControllerTest {
         boolean result = adminController.changeUserRole(1L, newRole);
         assertTrue(result);
         verify(userService).updateUserRole(1L, newRole);
+        logger.info("Zmiana roli powiodła się");
     }
 
     @Test // Test sprawdzający, czy użytkownik zostanie poprawnie usunięty i nie będzie go na liście
@@ -65,5 +72,6 @@ public class AdminControllerTest {
         verify(userService).deleteUser(user);
         verify(userService).findAll();
         assertTrue(adminController.getAllUsers().isEmpty());
+        logger.info("Użytkownik został poprawnie usunięty");
     }
 }
