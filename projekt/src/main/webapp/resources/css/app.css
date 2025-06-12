@@ -1,7 +1,0 @@
-.app-panelgrid-noborder.ui-panelgrid>*>tr, .app-panelgrid-noborder.ui-panelgrid .ui-panelgrid-cell {
-    border: none;
-}
-
-body {
-    font-size: 0.8em;
-}
