@@ -44,16 +44,10 @@ class ModeratorControllerTest {
 
     @Test
     void testLoadNotices_All_CallsFindAll() {
-
         List<Notice> emptyList = Collections.emptyList();
         when(noticeService.findAll()).thenReturn(emptyList);
-
         moderatorController.setFilterStatus("all");
-
-
         List<Notice> result = moderatorController.getFilteredNotices();
-
-
         verify(noticeService, times(1)).findAll();
         assertSame(emptyList, result);
     }
@@ -61,19 +55,12 @@ class ModeratorControllerTest {
 
     @Test
     void testSetFilterStatus_ShouldUpdateFilterAndCallLoadNotices() {
-
         List<Notice> mockNotices = Collections.emptyList();
         when(noticeService.findModerated()).thenReturn(mockNotices);
         when(noticeService.findNotModerated()).thenReturn(mockNotices);
         when(noticeService.findAll()).thenReturn(mockNotices);
-
-        moderatorController.filteredNotices = null;
         moderatorController.setFilterStatus("all");
-
-
         moderatorController.setFilterStatus("verified");
-
-
         assertEquals("verified", moderatorController.getFilterStatus());
         assertEquals(mockNotices, moderatorController.getFilteredNotices());
     }
@@ -82,6 +69,5 @@ class ModeratorControllerTest {
     public void testLogging() {
         logger.info("JUnit test: INFO log");
         logger.warn("JUnit test: WARN log");
-
     }
 }

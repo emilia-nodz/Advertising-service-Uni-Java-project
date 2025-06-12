@@ -26,16 +26,15 @@ public class ModeratorController implements Serializable {
     private static final Logger logger = LogManager.getLogger(ModeratorController.class);
 
     @EJB
-    public NoticeService noticeService;
+    private NoticeService noticeService;
 
     @EJB
-    public MessageSender messageSender;
-
+    private MessageSender messageSender;
 
     @Inject
-    public UserBean userBean;
+    private UserBean userBean;
 
-    public List<Notice> filteredNotices;
+    private List<Notice> filteredNotices;
     private String filterStatus = "all";
 
     @PostConstruct
