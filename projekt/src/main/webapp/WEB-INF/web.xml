@@ -48,6 +48,4 @@
         </form-login-config>
     </login-config>
 
-    <!-- TODO Panel administratora (tu trzeba dodać konfigurację, ale póki co coś nie pasi) -->
-    <deny-uncovered-http-methods />
 </web-app>
