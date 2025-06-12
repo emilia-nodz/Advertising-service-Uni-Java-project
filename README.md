@@ -11,15 +11,14 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
   - [emilia-nodz](https://github.com/emilia-nodz)
     -  Zarządzanie ogłoszeniami (dodawanie, edycja, usuwanie)
     -  Filtrowanie ogłoszeń po kategoriach
+    -  Wysyłanie maili o wygaśnięciu ogłoszenia
   - [wersosn](https://github.com/wersosn)
     -  Uwierzytelnianie
-    -  Zarządzanie użytkownikami (zmiana roli)
-    -  Zarządzanie kategoriami
-         
-[//]: # (Potem jakoś inaczej to powpisujemy)
+    -  Zarządzanie użytkownikami (zmiana roli, usuwanie użytkowników)
+    -  Zarządzanie kategoriami (dodawanie, edycja, usuwanie)
   - [TamaTamaTamaTamaTama](https://github.com/TamaTamaTamaTamaTama)
     - Zarządzanie ogłoszeniami (akceptacja przez moderację)
-    - Otrzymywanie maili o zaakceptowaniu i publikacji ogłoszenia
+    - Wysyłanie maili o zaakceptowaniu i publikacji ogłoszenia
 
 ## Funkcjonalności
 *Użytkownik:*
