@@ -18,6 +18,8 @@ Portal umożliwiający przeglądanie i zarządzanie ogłoszeniami. Aplikacja stw
          
 [//]: # (Potem jakoś inaczej to powpisujemy)
   - [TamaTamaTamaTamaTama](https://github.com/TamaTamaTamaTamaTama)
+  -   Zarządzanie ogłoszeniami (akceptacja przez moderację)
+  -   Otrzymywanie maili o zaakceptowaniu i publikacji ogłoszenia
 
 ## Funkcjonalności
 *Użytkownik:*
