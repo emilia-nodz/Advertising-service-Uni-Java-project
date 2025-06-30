@@ -107,7 +107,7 @@ http://localhost:4848/ - panel administracyjny Payara
 ```
 
 - Skonfiguruj **JDBC Connection Pool** (Zakładka Resources → JDBC → JDBC Connection Pools):
-Utwórz nowe źródło danych:
+- Utwórz nowe źródło danych:
 ```bash
 Pool Name: PostgresPool
 Resource Type: javax.sql.DataSource
@@ -124,7 +124,7 @@ DriverClass - org.postgresql.Driver
 ```
 
 - Skonfiguruj **JDBC Resources** (Zakładka Resources → JDBC → JDBC Resources):
-Utwórz nowy resource:
+- Utwórz nowy resource:
 ```bash
 JNDI Name: jdbc/myPostgres
 Pool Name: PostgresPool
@@ -252,7 +252,7 @@ http://localhost:4848/ - Payara Admin Console
 ```
 
 - Configure **JDBC Connection Pool** (Resources → JDBC → JDBC Connection Pools):
-Create a new connection pool:
+- Create a new connection pool:
 ```bash
 Pool Name: PostgresPool
 Resource Type: javax.sql.DataSource
@@ -269,7 +269,7 @@ DriverClass - org.postgresql.Driver
 ```
 
 - Configure **JDBC Resources** (Resources → JDBC → JDBC Resources):
-Create a new resource:
+- Create a new resource:
 ```bash
 JNDI Name: jdbc/myPostgres
 Pool Name: PostgresPool
